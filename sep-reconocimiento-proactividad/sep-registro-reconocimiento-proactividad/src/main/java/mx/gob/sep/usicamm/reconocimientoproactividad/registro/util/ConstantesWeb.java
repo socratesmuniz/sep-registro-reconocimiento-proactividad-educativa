@@ -1,4 +1,4 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.registro.util;
+package mx.gob.sep.usicamm.reconocimientoproactividad.registro.util;
 
 /**
  *

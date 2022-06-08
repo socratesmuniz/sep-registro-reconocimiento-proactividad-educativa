@@ -1,4 +1,4 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.accesodatos.aspectos;
+package mx.gob.sep.usicamm.reconocimientoproactividad.accesodatos.aspectos;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.aspectj.lang.JoinPoint;
@@ -70,7 +70,7 @@ public class LogSQLAspect {
         return completedSqlBuilder.toString();
     }
 
-    @Before("execution(* mx.gob.sep.usicamm.reconocimientoproactividadeducativa.accesodatos.*.*(..))")
+    @Before("execution(* mx.gob.sep.usicamm.reconocimientoproactividad.accesodatos.*.*(..))")
     public void logBeforeConnection(JoinPoint jp) throws Throwable {
         logDataSourceInfos("Before", jp);
     }

@@ -1,4 +1,4 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.documentos;
+package mx.gob.sep.usicamm.reconocimientoproactividad.negocio.documentos;
 
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Chunk;
@@ -18,7 +18,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.configuracion.ConfiguracionAplicacion;
+import mx.gob.sep.usicamm.reconocimientoproactividad.configuracion.ConfiguracionAplicacion;
 
 /**
  *
@@ -60,7 +60,7 @@ public class HeaderFooterPDF extends PdfPageEventHelper{
         catch(Exception ex){
             log.error("No se logro cargar el logo para los PDFs ("+HeaderFooterPDF.class.getResource("./logoSEP.png")+")", ex);
         }
-        ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("Proceso de reconocimientoproactividadeducativa de asesoría, apoyo y,", UtilsPDF.generaFuenteCabecera()), ((rect.getLeft()+rect.getRight())/2), rect.getTop()-20, 0);
+        ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("Proceso de reconocimientoproactividad de asesoría, apoyo y,", UtilsPDF.generaFuenteCabecera()), ((rect.getLeft()+rect.getRight())/2), rect.getTop()-20, 0);
         ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("acompañamiento en educación básica, ciclo escolar 2022-2023", UtilsPDF.generaFuenteCabecera()), ((rect.getLeft()+rect.getRight())/2), rect.getTop()-40, 0);
 
         //marca de agua

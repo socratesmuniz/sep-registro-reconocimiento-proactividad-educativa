@@ -1,4 +1,4 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.accesodatos.aspectos;
+package mx.gob.sep.usicamm.reconocimientoproactividad.accesodatos.aspectos;
 
 import java.util.Map;
 import org.aspectj.lang.JoinPoint;

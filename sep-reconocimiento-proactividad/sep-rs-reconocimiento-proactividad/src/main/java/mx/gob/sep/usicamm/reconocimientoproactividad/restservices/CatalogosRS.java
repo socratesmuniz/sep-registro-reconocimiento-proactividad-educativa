@@ -1,12 +1,12 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.restservices;
+package mx.gob.sep.usicamm.reconocimientoproactividad.restservices;
 
 import java.util.concurrent.Callable;
 import lombok.extern.slf4j.Slf4j;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.CatalogosService;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.excepciones.AccesoDatosExcepcion;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.excepciones.OperacionInvalidaBdException;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.restservices.aspectos.LogRESTTime;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.restservices.objetos.RespuestaRestParser;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.CatalogosService;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.excepciones.AccesoDatosExcepcion;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.excepciones.OperacionInvalidaBdException;
+import mx.gob.sep.usicamm.reconocimientoproactividad.restservices.aspectos.LogRESTTime;
+import mx.gob.sep.usicamm.reconocimientoproactividad.restservices.objetos.RespuestaRestParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

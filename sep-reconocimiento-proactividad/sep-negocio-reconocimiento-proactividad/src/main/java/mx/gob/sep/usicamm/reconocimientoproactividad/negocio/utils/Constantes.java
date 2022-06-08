@@ -1,4 +1,4 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.utils;
+package mx.gob.sep.usicamm.reconocimientoproactividad.negocio.utils;
 
 import java.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;

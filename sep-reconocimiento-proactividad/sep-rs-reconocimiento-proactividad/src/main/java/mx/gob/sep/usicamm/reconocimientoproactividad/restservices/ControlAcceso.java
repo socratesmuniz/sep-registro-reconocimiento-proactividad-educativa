@@ -1,12 +1,12 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.restservices;
+package mx.gob.sep.usicamm.reconocimientoproactividad.restservices;
 
 
 
 import java.time.LocalDate;
 import lombok.extern.slf4j.Slf4j;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.configuracion.ConfiguracionAplicacion;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.utils.Constantes;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.utils.MD5HashGenerator;
+import mx.gob.sep.usicamm.reconocimientoproactividad.configuracion.ConfiguracionAplicacion;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.utils.Constantes;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.utils.MD5HashGenerator;
 import org.springframework.stereotype.Component;
 
 /**

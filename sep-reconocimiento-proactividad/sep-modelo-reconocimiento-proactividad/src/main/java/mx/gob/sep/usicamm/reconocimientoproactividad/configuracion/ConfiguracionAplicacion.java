@@ -1,4 +1,4 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.configuracion;
+package mx.gob.sep.usicamm.reconocimientoproactividad.configuracion;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

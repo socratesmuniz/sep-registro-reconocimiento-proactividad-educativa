@@ -1,4 +1,4 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.excepciones;
+package mx.gob.sep.usicamm.reconocimientoproactividad.negocio.excepciones;
 
 /**
  *

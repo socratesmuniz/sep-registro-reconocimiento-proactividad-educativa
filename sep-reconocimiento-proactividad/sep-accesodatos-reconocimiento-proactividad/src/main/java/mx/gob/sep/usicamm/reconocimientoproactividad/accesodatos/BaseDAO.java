@@ -1,6 +1,6 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.accesodatos;
+package mx.gob.sep.usicamm.reconocimientoproactividad.accesodatos;
 
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.configuracion.ConfiguracionAplicacion;
+import mx.gob.sep.usicamm.reconocimientoproactividad.configuracion.ConfiguracionAplicacion;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**

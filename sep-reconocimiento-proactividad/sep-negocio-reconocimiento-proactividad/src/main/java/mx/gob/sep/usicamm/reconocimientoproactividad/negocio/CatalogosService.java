@@ -1,12 +1,12 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio;
+package mx.gob.sep.usicamm.reconocimientoproactividad.negocio;
 
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.accesodatos.CatalogosDAO;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.entidades.CatalogoDTO;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.excepciones.AccesoDatosExcepcion;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.excepciones.OperacionInvalidaBdException;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.utils.Constantes;
+import mx.gob.sep.usicamm.reconocimientoproactividad.accesodatos.CatalogosDAO;
+import mx.gob.sep.usicamm.reconocimientoproactividad.entidades.CatalogoDTO;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.excepciones.AccesoDatosExcepcion;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.excepciones.OperacionInvalidaBdException;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.utils.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -30,8 +30,8 @@ public class CatalogosService {
     /**
      * Recupera la lista de entidades federativas que existen para el proceso
      * @return Lista de entidades federativas
-     * @throws mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.excepciones.AccesoDatosExcepcion
-     * @throws mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.excepciones.OperacionInvalidaBdException
+     * @throws mx.gob.sep.usicamm.reconocimientoproactividad.negocio.excepciones.AccesoDatosExcepcion
+     * @throws mx.gob.sep.usicamm.reconocimientoproactividad.negocio.excepciones.OperacionInvalidaBdException
      */
     public List<CatalogoDTO> getEntidades() throws AccesoDatosExcepcion, OperacionInvalidaBdException{
         try {
@@ -53,7 +53,7 @@ public class CatalogosService {
      * @param cveMunicipio
      * @return Lista de sostenimientos
      * @throws AccesoDatosExcepcion 
-     * @throws mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.excepciones.OperacionInvalidaBdException 
+     * @throws mx.gob.sep.usicamm.reconocimientoproactividad.negocio.excepciones.OperacionInvalidaBdException 
      */
     public List<CatalogoDTO> getSostenimientos(Integer cveEntidad, Integer cveMunicipio) throws AccesoDatosExcepcion, OperacionInvalidaBdException{
         try {

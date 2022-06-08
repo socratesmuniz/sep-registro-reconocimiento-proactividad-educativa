@@ -1,4 +1,4 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.documentos;
+package mx.gob.sep.usicamm.reconocimientoproactividad.negocio.documentos;
 
 import com.itextpdf.text.Anchor;
 import com.itextpdf.text.BadElementException;
@@ -23,11 +23,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import lombok.extern.slf4j.Slf4j;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.configuracion.ConfiguracionAplicacion;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.entidades.DocenteDTO;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.entidades.ParticipacionDTO;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.DocentesService;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.RegistroParticipacionService;
+import mx.gob.sep.usicamm.reconocimientoproactividad.configuracion.ConfiguracionAplicacion;
+import mx.gob.sep.usicamm.reconocimientoproactividad.entidades.DocenteDTO;
+import mx.gob.sep.usicamm.reconocimientoproactividad.entidades.ParticipacionDTO;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.DocentesService;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.RegistroParticipacionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

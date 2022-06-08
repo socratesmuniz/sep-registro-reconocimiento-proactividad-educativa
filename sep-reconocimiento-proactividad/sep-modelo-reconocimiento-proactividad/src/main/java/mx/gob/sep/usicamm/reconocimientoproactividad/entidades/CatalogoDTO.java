@@ -1,4 +1,4 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.entidades;
+package mx.gob.sep.usicamm.reconocimientoproactividad.entidades;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
