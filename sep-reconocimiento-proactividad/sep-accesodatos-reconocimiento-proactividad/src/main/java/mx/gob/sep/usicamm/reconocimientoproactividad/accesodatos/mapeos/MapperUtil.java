@@ -1,8 +1,8 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.accesodatos.mapeos;
+package mx.gob.sep.usicamm.reconocimientoproactividad.accesodatos.mapeos;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.entidades.*;
+import mx.gob.sep.usicamm.reconocimientoproactividad.entidades.*;
 
 /**
  *

@@ -1,10 +1,10 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.restservices.objetos;
+package mx.gob.sep.usicamm.reconocimientoproactividad.restservices.objetos;
 
 import java.util.concurrent.Callable;
 import lombok.extern.slf4j.Slf4j;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.excepciones.AccesoDatosExcepcion;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.excepciones.NegocioExcepcion;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.utils.Constantes;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.excepciones.AccesoDatosExcepcion;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.excepciones.NegocioExcepcion;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.utils.Constantes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

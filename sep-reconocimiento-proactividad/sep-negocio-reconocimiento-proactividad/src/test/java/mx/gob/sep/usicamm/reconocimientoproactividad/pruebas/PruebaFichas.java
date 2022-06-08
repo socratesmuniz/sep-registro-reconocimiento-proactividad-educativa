@@ -1,9 +1,9 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.pruebas;
+package mx.gob.sep.usicamm.reconocimientoproactividad.pruebas;
 
 import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.documentos.FichaRegistro;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.documentos.FichaRegistro;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

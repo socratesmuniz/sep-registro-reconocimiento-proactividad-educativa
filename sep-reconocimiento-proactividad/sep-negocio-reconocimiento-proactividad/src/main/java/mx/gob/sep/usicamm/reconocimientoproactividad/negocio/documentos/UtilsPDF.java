@@ -1,4 +1,4 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.documentos;
+package mx.gob.sep.usicamm.reconocimientoproactividad.negocio.documentos;
 
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
@@ -14,7 +14,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 import java.io.IOException;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.configuracion.ConfiguracionAplicacion;
+import mx.gob.sep.usicamm.reconocimientoproactividad.configuracion.ConfiguracionAplicacion;
 
 /**
  *
@@ -281,15 +281,6 @@ private UtilsPDF(){
         
         cell.setBorder(PdfPCell.NO_BORDER);
 
-        return cell;
-    }
-
-    public static PdfPCell generaCeldaObservaciones(String titulo){
-        PdfPCell cell = new PdfPCell(new Paragraph(titulo, generaFuenteCurso()));
-        cell.setBackgroundColor(new BaseColor(230, 231, 232));
-        cell.setBorder(PdfPCell.NO_BORDER);
-        cell.setCellEvent(new RoundBorderCell());
-        
         return cell;
     }
     

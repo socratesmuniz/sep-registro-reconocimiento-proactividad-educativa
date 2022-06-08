@@ -1,4 +1,4 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.registro;
+package mx.gob.sep.usicamm.reconocimientoproactividad.registro;
 
 import javax.sql.DataSource;
 import org.slf4j.Logger;
@@ -16,15 +16,15 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @EnableScheduling
 @SpringBootApplication
-@ComponentScan({"mx.gob.sep.usicamm.reconocimientoproactividadeducativa"})
-public class RegistroReconocimientoProactividadAcademicaApplication implements CommandLineRunner {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegistroReconocimientoProactividadAcademicaApplication.class);
+@ComponentScan({"mx.gob.sep.usicamm.reconocimientoproactividad"})
+public class RegistroReconocimientoProactividadApplication implements CommandLineRunner {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegistroReconocimientoProactividadApplication.class);
 
     @Autowired
     private DataSource dataSource;
 
     public static void main(String[] args) {
-        SpringApplication.run(RegistroReconocimientoProactividadAcademicaApplication.class, args);
+        SpringApplication.run(RegistroReconocimientoProactividadApplication.class, args);
     }
     
     @Override

@@ -1,15 +1,15 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.restservices;
+package mx.gob.sep.usicamm.reconocimientoproactividad.restservices;
 
 import java.util.concurrent.Callable;
 import lombok.extern.slf4j.Slf4j;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.entidades.ParticipacionDTO;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.RegistroParticipacionService;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.excepciones.AccesoDatosExcepcion;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.excepciones.NegocioExcepcion;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.excepciones.OperacionInvalidaBdException;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.utils.Constantes;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.restservices.aspectos.LogRESTTime;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.restservices.objetos.RespuestaRestParser;
+import mx.gob.sep.usicamm.reconocimientoproactividad.entidades.ParticipacionDTO;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.RegistroParticipacionService;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.excepciones.AccesoDatosExcepcion;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.excepciones.NegocioExcepcion;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.excepciones.OperacionInvalidaBdException;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.utils.Constantes;
+import mx.gob.sep.usicamm.reconocimientoproactividad.restservices.aspectos.LogRESTTime;
+import mx.gob.sep.usicamm.reconocimientoproactividad.restservices.objetos.RespuestaRestParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

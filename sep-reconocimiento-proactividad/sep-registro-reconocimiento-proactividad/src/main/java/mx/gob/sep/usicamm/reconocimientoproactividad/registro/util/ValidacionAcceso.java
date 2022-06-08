@@ -1,4 +1,4 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.registro.util;
+package mx.gob.sep.usicamm.reconocimientoproactividad.registro.util;
 
 import gob.sep.usicamm.reglas_negocio.Validacion;
 import gob.sep.usicamm.reglas_negocio.exception.ReglaNegocioException;
@@ -9,12 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.accesodatos.LoginDAO;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.configuracion.ConfiguracionAplicacion;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.entidades.UsuarioDTO;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.DatosPersonalesService;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.utils.Constantes;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.utils.MD5HashGenerator;
+import mx.gob.sep.usicamm.reconocimientoproactividad.accesodatos.LoginDAO;
+import mx.gob.sep.usicamm.reconocimientoproactividad.configuracion.ConfiguracionAplicacion;
+import mx.gob.sep.usicamm.reconocimientoproactividad.entidades.UsuarioDTO;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.DatosPersonalesService;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.utils.Constantes;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.utils.MD5HashGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;

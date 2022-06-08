@@ -1,4 +1,4 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.restservices.objetos;
+package mx.gob.sep.usicamm.reconocimientoproactividad.restservices.objetos;
 
 import java.time.LocalDateTime;
 

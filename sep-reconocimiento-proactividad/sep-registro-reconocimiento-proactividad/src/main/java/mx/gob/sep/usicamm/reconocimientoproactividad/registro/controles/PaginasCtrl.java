@@ -1,9 +1,9 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.registro.controles;
+package mx.gob.sep.usicamm.reconocimientoproactividad.registro.controles;
 
 import javax.servlet.http.HttpServletRequest;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.utils.Constantes;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.registro.util.ConstantesWeb;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.registro.util.ValidacionAcceso;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.utils.Constantes;
+import mx.gob.sep.usicamm.reconocimientoproactividad.registro.util.ConstantesWeb;
+import mx.gob.sep.usicamm.reconocimientoproactividad.registro.util.ValidacionAcceso;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,4 +1,4 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa;
+package mx.gob.sep.usicamm.reconocimientoproactividad;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @author hiryu
  */
 @SpringBootApplication
-@ComponentScan({"mx.gob.sep.usicamm.reconocimientoproactividadeducativa"})
+@ComponentScan({"mx.gob.sep.usicamm.reconocimientoproactividad"})
 public class PruebasConfig implements CommandLineRunner{
     public static void main(String[] args) {
         SpringApplication.run(PruebasConfig.class, args);

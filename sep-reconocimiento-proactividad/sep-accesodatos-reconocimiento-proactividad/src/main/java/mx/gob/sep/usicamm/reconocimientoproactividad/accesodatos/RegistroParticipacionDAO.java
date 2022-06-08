@@ -1,11 +1,11 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.accesodatos;
+package mx.gob.sep.usicamm.reconocimientoproactividad.accesodatos;
 
 import java.sql.Types;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.accesodatos.aspectos.LogExecutionTime;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.accesodatos.mapeos.MapperUtil;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.accesodatos.util.SQL;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.configuracion.ConfiguracionAplicacion;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.entidades.ParticipacionDTO;
+import mx.gob.sep.usicamm.reconocimientoproactividad.accesodatos.aspectos.LogExecutionTime;
+import mx.gob.sep.usicamm.reconocimientoproactividad.accesodatos.mapeos.MapperUtil;
+import mx.gob.sep.usicamm.reconocimientoproactividad.accesodatos.util.SQL;
+import mx.gob.sep.usicamm.reconocimientoproactividad.configuracion.ConfiguracionAplicacion;
+import mx.gob.sep.usicamm.reconocimientoproactividad.entidades.ParticipacionDTO;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

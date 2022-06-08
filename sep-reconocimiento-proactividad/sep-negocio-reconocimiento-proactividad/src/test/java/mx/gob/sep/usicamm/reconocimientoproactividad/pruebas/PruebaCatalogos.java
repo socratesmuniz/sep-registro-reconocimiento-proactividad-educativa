@@ -1,8 +1,8 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.pruebas;
+package mx.gob.sep.usicamm.reconocimientoproactividad.pruebas;
 
 import java.util.List;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.entidades.CatalogoDTO;
-import mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.CatalogosService;
+import mx.gob.sep.usicamm.reconocimientoproactividad.entidades.CatalogoDTO;
+import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.CatalogosService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package mx.gob.sep.usicamm.reconocimientoproactividadeducativa.negocio.utils;
+package mx.gob.sep.usicamm.reconocimientoproactividad.negocio.utils;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
