@@ -1,0 +1,16 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+    </head>
+    <body>
+        <div th:fragment="footer" class="container-footer">
+            <hr>
+            <!-- this is footer -->
+            <span class="text-muted">
+                © <span th:text="${#dates.year(#dates.createNow())}"/>  Copyright: <span th:text="${@environment.getProperty('app.name.org')}"></span> -- [ <span th:text="${@environment.getProperty('app.version')}"></span> ]
+            </span>
+            <!-- JS SEP -->
+            <script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
+        </div>
+    </body>
+</html>

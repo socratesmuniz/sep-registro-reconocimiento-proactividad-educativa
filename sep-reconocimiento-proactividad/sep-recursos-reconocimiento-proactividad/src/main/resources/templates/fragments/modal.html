@@ -1,0 +1,21 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+    <body>
+	<div id="myModal" th:fragment="modal" class="modal2" ng-cloak
+		ng-show="$root.modal.visible">
+		<div ng-class="$root.modal.clase">
+			<h4 ng-bind="$root.modal.modalMsg1"></h4>
+			<div ng-bind-html="$root.modal.modalMsg2"></div>
+			<br>
+			<div class="form-group">
+				<button ng-if="$root.modal.funcionModalAceptar"
+					class="btn btn-primary"
+					ng-click="$root.modal.funcionModalAceptar()">{{$root.modal.buttonMsgOk}}</button>
+				<button ng-if="$root.modal.funcionModalCancelar"
+					class="btn btn-danger"
+					ng-click="$root.modal.funcionModalCancelar()">{{$root.modal.buttonMsgCancel}}</button>
+			</div>
+		</div>
+	</div>
+    </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="shortcut icon" type="image/x-icon" href="https://framework-gb.cdn.gob.mx/favicon.ico">
+        <title th:text="${@environment.getProperty('app.header.title')}"></title>
+        <div th:replace="fragments/header :: header-js"/>
+        <div th:replace="fragments/header :: header-css"/>
+    </head>
+    <body>
+        <main class="page">
+            <div th:replace="fragments/header :: header"/>
+            <div class="container container-curp-min">
+                <div class="content">
+                    <div class="login">
+                        <div class="alert alert-danger">
+                            <h4>¡Error inesperado!</h4>
+                            <strong>[<span th:text="${status}"></span>] <span th:text="${error}"></span></strong>: <i th:text="${message}"></i><br /><br />
+                            Por el momento el aplicativo esta presentando un problema inesperado, favor intentarlo nuevamente más tarde. <br /><br />
+                            <a href="/venus">[Regresar a VENUS]</a> <br />
+                        </div>
+                    </div>
+                </div>
+                <div th:replace="fragments/footer :: footer"/>
+            </div>
+        </main>
+    </body>
+</html>

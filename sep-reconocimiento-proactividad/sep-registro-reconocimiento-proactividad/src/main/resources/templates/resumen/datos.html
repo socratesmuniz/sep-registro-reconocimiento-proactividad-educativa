@@ -1,0 +1,185 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div th:fragment="datos" class="col-md-12 contenedor_formulario">
+            <div class="text-justify">
+                <p>Por favor revise los datos y de clic en Continuar.</p>
+            </div>
+            
+            <div class="form-group span-3-column">
+                <div ng-show="messageAPI.show">
+                    <div ng-class="{'alert alert-success': messageAPI.isSuccess, 'alert alert-danger': messageAPI.isError}">
+                        <strong>¡Información!: </strong>
+                        <div ng-bind-html="messageAPI.msg"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group span-3-column">
+                <h3 class="red salto" th:text="${@environment.getProperty('app.menu.title.datospersonales')}"></h3>
+                <div>
+                    <strong>CURP: </strong>
+                    <span ng-bind-html="data.datosDocente.curp"></span>
+                </div>
+                <div>
+                    <strong>Nombre: </strong>
+                    <span ng-bind-html="data.datosDocente.nombre"></span>
+                </div>
+                <div>
+                    <strong>Primer apellido: </strong>
+                    <span ng-bind-html="data.datosDocente.primerApellido"></span>
+                </div>
+                <div>
+                    <strong>Segundo apellido: </strong>
+                    <span ng-bind-html="data.datosDocente.segundoApellido"></span>
+                </div>
+                <div>
+                    <strong>Teléfono 1: </strong>
+                    <span ng-bind-html="data.datosDocente.telefono1"></span>
+                </div>
+                <div>
+                    <strong>Teléfono 2: </strong>
+                    <span ng-bind-html="formateaValor(data.datosDocente.telefono2)"></span>
+                </div>
+                <div>
+                    <strong>Correo electrónico 1: </strong>
+                    <span ng-bind-html="data.datosDocente.correo1"></span>
+                </div>
+                <div>
+                    <strong>Correo electrónico 2: </strong>
+                    <span ng-bind-html="formateaValor(data.datosDocente.correo2)"></span>
+                </div>
+            </div>
+            <hr style="height: 5px; background-color: darkred;"/>
+            
+            <div class="form-group span-3-column">
+                <h3 class="red salto" th:text="${@environment.getProperty('app.menu.title.participacion')}"></h3>
+                <div>
+                    <strong>Entidad federativa donde labora: </strong>
+                    <span ng-bind-html="data.datosParticipacion.entidad"></span>
+                </div>
+                <div ng-if="(data.datosParticipacion.municipio!==null && data.datosParticipacion.municipio!=='')">
+                    <strong>Municipio: </strong>
+                    <span ng-bind-html="data.datosParticipacion.municipio"></span>
+                </div>
+                <div>
+                    <strong>Sostenimiento: </strong>
+                    <span ng-bind-html="data.datosParticipacion.sostenimiento"></span>
+                </div>
+                <div>
+                    <strong>Función: </strong>
+                    <span ng-bind-html="data.datosParticipacion.puestoActual"></span>
+                </div>
+                <div>
+                    <strong>Nivel o servicio: </strong>
+                    <span ng-bind-html="data.datosParticipacion.servicioEducativo"></span>
+                </div>
+                <div>
+                    <strong>Categoría: </strong>
+                    <span>{{data.datosParticipacion.cveCategoriaActual}} - {{data.datosParticipacion.categoriaActual}}</span>
+                </div>
+                <div>
+                    <strong>Tipo de plaza: </strong>
+                    <span ng-bind-html="data.datosParticipacion.tipoPlaza"></span>
+                </div>
+                <div>
+                    <strong>Tipo de reconocimiento (asesoría, apoyo y acompañamiento): </strong>
+                    <span ng-bind-html="data.datosParticipacion.valoracion"></span>
+                </div>
+                <div>
+                    <strong>Año de la Convocatoria: </strong>
+                    <span>2022-2023</span>
+                </div>
+                <div>
+                    <strong>Años anteriores de participación: </strong>
+                    <span ng-repeat="anio in aniosParticipacion">{{anio.descripcionDato}}{{($index>0? ', ': '')}}</span>
+                    <span ng-if="!aniosParticipacion || !aniosParticipacion.length || aniosParticipacion.length===0">Ninguno</span>
+                </div>
+                <div ng-if="data.datosParticipacion.cveModalidadTutoria">
+                    <strong>Modalidad: </strong>
+                    <span ng-bind-html="data.datosParticipacion.modalidadTutoria"></span>
+                </div>
+                <div>
+                    <strong>Plazas: </strong>
+                    <span ng-repeat="plaza in data.datosParticipacion.plazas">
+                        {{plaza.plaza}} - {{plaza.cct}}{{(data.datosParticipacion.cveTipoPlaza==='2'? ' ('+plaza.horas+')': '')}}{{($index>0? ', ': '')}}
+                    </span>
+                </div>
+            </div>
+            <hr style="height: 5px; background-color: darkred;"/>
+            
+            <div class="form-group span-3-column">
+                <h3 class="red salto" th:text="${@environment.getProperty('app.menu.title.requisitos')}"></h3>
+                <div ng-repeat="item in requisitos" ng-if="getRespuestaRequisito(item.cve)!==null">
+                    <strong ng-bind-html="item.descripcion"></strong>: 
+                    <span ng-bind-html="getRespuestaRequisito(item.cve)"></span>
+                </div>
+            </div>
+            <hr style="height: 5px; background-color: darkred;"/>
+            
+            <div class="form-group span-3-column">
+                <h3 class="red salto" th:text="${@environment.getProperty('app.menu.title.factores')}"></h3>
+                <div ng-repeat="item in factores" ng-if="getRespuestaFactor(item.cve)!==null">
+                    <strong ng-bind-html="item.descripcion"></strong>: 
+                    <span ng-bind-html="getRespuestaFactor(item.cve)"></span>
+                    <div ng-if="item.cve===29 && getRespuestaFactor(item.cve)==='si'">
+                        <strong>Cursos seleccionados</strong>
+                        <ul>
+                            <li ng-repeat="curso in cursosSeleccionados">{{curso.descripcion}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr style="height: 5px; background-color: darkred;"/>
+
+            <div class="form-group span-3-column">
+                <div class="text-center">
+                    <button type="button" class="btn btn-info" ng-click="validaDatosRegistro()"
+                            style="background-color: #3bb452;">
+                        <i class="glyphicon glyphicon-file"></i> Imprimir ficha de registro
+                    </button>
+                    <input type="button" ng-disabled="!container.showContinuar" value="Continuar"
+                            class="btn btn-primary" ng-click="continuar()" />
+                </div>
+            </div>
+            
+            <div class="form-group span-3-column">
+                <div ng-show="messageAPI.show">
+                    <div ng-class="{'alert alert-success': messageAPI.isSuccess, 'alert alert-danger': messageAPI.isError}">
+                        <strong>¡Información!: </strong>
+                        <div ng-bind-html="messageAPI.msg"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group span-3-column">
+                <div class="alert alert-danger"  ng-show="data.errores.length>0">
+                    <strong>¡Se presentaron problemas con los datos!: </strong>
+                    <br />
+                    <ul class="text-left">
+                        <li ng-repeat="error in data.errores"><span  ng-bind-html="error"></span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="form-group span-3-column">
+                <table border="0" width="100%">
+                    <tr>
+                        <td width="50%">
+                            <span th:replace="fragments/botonRegresar :: boton_regresar" />
+                        </td>
+                        <td width="50%" class="text-right">
+                            <br /><br />
+                            <button type="button" class="btn btn-warning" ng-click="regresaBusquedaDocente()"
+                                     ng-disabled="!container.showContinuar">
+                                <i class="glyphicon glyphicon-search"></i>  Ingresar otra curp
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
+
+
+

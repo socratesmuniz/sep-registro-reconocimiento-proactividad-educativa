@@ -1,0 +1,52 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <div th:fragment="header-css">
+            <!-- this is header-css -->
+            <!-- this is CSS of SEP -->
+            <link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">
+            <!-- ui-select files -->
+            <link rel="stylesheet" th:href="@{/css/select.css}"/>
+            <!-- this is APP's CSS  Abajo ira la properties de los temas -->
+            <link rel="stylesheet"  th:href="@{/css/main-rt.css}"/>
+            <!-- this is LOADING's CSS  -->
+            <link rel="stylesheet" th:href="@{/css/cargando.css}"/>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+        </div>
+        <div th:fragment="header-js">
+            <script type="text/javascript">
+                if (history.forward(1)) {
+                    location.replace(history.forward(1));
+                }
+
+            </script>
+
+            <script type="text/javascript" th:src="@{/js/lib/angular.min.js}"></script>
+            <script type="text/javascript" th:src="@{/js/lib/angular-sanitize.min.js}"></script>
+            <script type="text/javascript" th:src="@{/js/lib/angular-route.min.js}"></script>
+            <script type="text/javascript" th:src="@{/js/lib/select.js}"></script>
+            <script type="text/javascript" th:src="@{/js/lib/comunes.js?v=@environment.getProperty('app.version')}"></script>
+        </div>
+    </head>
+    <body>
+        <div th:fragment="header" class="container-header">
+            <div class="cabecera">
+                <div class="banner-img">
+                    <figure class="banner-img-figure">
+                        <img th:src="@{/img/banner.jpg}" />
+                    </figure>
+                </div>
+                <div class="banner">
+                    <div class="container container2">
+                        <h2 th:text="${@environment.getProperty('app.header.title')}"></h2>
+                        <div class="nav-sep"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ol th:fragment="breadcrumbApp (menu)" class="breadcrumb">
+            <li><a th:href="@{/home}"><i class="icon icon-home"></i></a></li>
+            <li class="active" th:text="${menu}"></li>
+        </ol>
+    </body>
+</html>

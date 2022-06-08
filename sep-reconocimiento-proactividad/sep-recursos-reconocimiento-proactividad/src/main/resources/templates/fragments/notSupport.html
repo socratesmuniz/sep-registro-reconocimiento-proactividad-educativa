@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+    <div th:fragment="notSupport" class="modal2" ng-show="!supportBrowser.soportado">
+        <div class="animated bounceInLeft">
+            <h4>Navegador no soportado</h4>
+            <div>
+                La aplicación no esta diseñada para operar con su navegador <strong>"{{ supportBrowser.browser }}"</strong>.
+            </div>
+            <br />
+            <table style="width:100%;" border="0">
+                <tr>
+                    <td colspan="2" class="text-center">
+                        Navegadores soportados
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50%" class="text-center">
+                        <img th:src="@{/img/chrome.png}" />
+                        <br />
+                        <strong>Chrome</strong>
+                    </td>
+                    <td width="50%" class="text-center">
+                        <img th:src="@{/img/firefox.png}" />
+                        <br />
+                        <strong>Firefox</strong>
+                    </td>
+                </tr>
+            </table>
+            &nbsp;
+        </div>
+    </div>
+</body>
+</html>
+

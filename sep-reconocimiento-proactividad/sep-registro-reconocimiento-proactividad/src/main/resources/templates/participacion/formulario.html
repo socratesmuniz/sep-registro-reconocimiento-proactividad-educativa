@@ -1,0 +1,248 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div th:fragment="formulario" class="col-md-12 contenedor_formulario">
+            <style>
+                .ui-select-match-text{
+                    font-size: 9px;
+                }
+            </style>
+            <div class="text-justify">
+                <p>A continuación se presenta la entidad federativa, así como el nivel, servicio o materia 
+                    educativa (<strong>Tipo de valoración</strong>) que seleccionó la persona participante 
+                    en el proceso de admisión en educación básica.</p>
+                <p>En caso de que la persona participante requiera realizar <strong>cambio del tipo de 
+                    valoración que haya registrado</strong> en la generación de cita, podrá ser <strong>
+                    cambiado</strong> en este momento.</p>
+                <p>Es importante que usted <strong>confirme con</strong> la persona participante sobre la 
+                    actualización realizada a su información.</p>
+            </div>
+            
+            <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
+                <div ng-show="messageAPI.show">
+                    <div ng-class="{'alert alert-success': messageAPI.isSuccess, 'alert alert-danger': messageAPI.isError}">
+                        <strong>¡Información!: </strong>
+                        <div ng-bind-html="messageAPI.msg"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <form name="valoracionForm" role="form" novalidate autocomplete="off">
+                <div class="form-group span2-column">
+                    <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">* Campo requerido</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="entidad">
+                        Tipo educativo
+                    </label>
+                    <br />
+                    Educación básica
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="entidad">
+                        Entidad federativa donde labora
+                    </label>
+                    <br />
+                    <span ng-bind-html="recuperaNombreEntidad()"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="entidad">
+                        Proceso
+                    </label>
+                    <br />
+                    Reconocimiento (asesoría, apoyo y acompañamiento)
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="cveSostenimiento">
+                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Sostenimiento
+                    </label>
+                    <select class="form-control" id="cveSostenimiento" name="cveSostenimiento" required ng-model="data.cveSostenimiento"
+                            ng-change="cambiaSostenimiento()"
+                            ng-style="{'border':(valoracionForm.cveSostenimiento.$touched && valoracionForm.cveSostenimiento.$invalid? '2px solid red': '1px solid silver')}" >
+                        <option value="">- Seleccione una opción -</option>
+                        <option ng-value="item.cve" ng-repeat="item in sostenimientos" ng-bind="item.descripcion"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="cvePuesto">
+                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Función
+                    </label>
+                    <select class="form-control" id="cvePuesto" name="cvePuesto" required ng-model="data.cvePuesto"
+                            ng-change="cambiaPuesto()"
+                            ng-style="{'border':(valoracionForm.cvePuesto.$touched && valoracionForm.cvePuesto.$invalid? '2px solid red': '1px solid silver')}" >
+                        <option value="">- Seleccione una opción -</option>
+                        <option ng-value="item.cve" ng-repeat="item in puestos" ng-bind="item.descripcion"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="cveServicio">
+                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Nivel o servicio
+                    </label>
+                    <select class="form-control" id="cveServicio" name="cveServicio" required ng-model="data.cveServicio"
+                            ng-change="cambiaServicio()"
+                            ng-style="{'border':(valoracionForm.cveServicio.$touched && valoracionForm.cveServicio.$invalid? '2px solid red': '1px solid silver')}" >
+                        <option value="">- Seleccione una opción -</option>
+                        <option ng-value="item.cve" ng-repeat="item in servicios" ng-bind="item.descripcion"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="cveCategoria">
+                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Categoría
+                    </label>
+                    <select class="form-control" id="cveCategoria" name="cveCategoria" required ng-model="data.cveCategoria"
+                            ng-change="cambiaCategoria()"
+                            ng-style="{'border':(valoracionForm.cveCategoria.$touched && valoracionForm.cveCategoria.$invalid? '2px solid red': '1px solid silver')}" >
+                        <option value="">- Seleccione una opción -</option>
+                        <option ng-value="item.cve" ng-repeat="item in categorias" ng-bind="item.descripcion"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="cveTipoPlaza">
+                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Tipo de plaza
+                    </label>
+                    <br />
+                    <select class="form-control" id="cveTipoPlaza" name="cveTipoPlaza" required ng-model="data.cveTipoPlaza"
+                            ng-change="cambiaTipoPlaza()"
+                            ng-style="{'border':(valoracionForm.cveTipoPlaza.$touched && valoracionForm.cveTipoPlaza.$invalid? '2px solid red': '1px solid silver')}" >
+                        <option value="">- Seleccione una opción -</option>
+                        <option ng-value="item.cve" ng-repeat="item in tiposPlaza" ng-bind="item.descripcion"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="cveValoracion">
+                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Tipo de reconocimiento (asesoría, apoyo y acompañamiento)
+                    </label>
+                    <select class="form-control" id="cveValoracion" name="cveValoracion" required ng-model="data.cveValoracion"
+                            ng-style="{'border':(valoracionForm.cveValoracion.$touched && valoracionForm.cveValoracion.$invalid? '2px solid red': '1px solid silver')}" >
+                        <option value="">- Seleccione una opción -</option>
+                        <option ng-value="item.cve" ng-repeat="item in valoraciones" ng-bind="item.descripcion"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="anioConvocatoria">
+                        Año de la Convocatoria
+                    </label>
+                    <br />
+                    2022-2023
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="aniosConvocatoria">
+                        Años anteriores de participación
+                    </label>
+                    <div ng-repeat="item in aniosParticipacion">
+                        <input ng-model="checkboxModelAniosParticipacion[item.cve]" type="checkbox" /> {{item.descripcion}}
+                    </div>
+                    <div class="nota-llenado">
+                        En caso de no haber participado en ningún año anterior, deje sin marcar los datos
+                    </div>
+                </div>
+                <div class="form-group" ng-if="data.cveValoracion==='220878'">
+                    <label class="control-label" for="cveModalidadTutoria">
+                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Modalidad
+                    </label>
+                    <br />
+                    <select class="form-control" id="cveModalidadTutoria" name="cveModalidadTutoria" required ng-model="data.cveModalidadTutoria"
+                            ng-style="{'border':(valoracionForm.cveModalidadTutoria.$touched && valoracionForm.cveModalidadTutoria.$invalid? '2px solid red': '1px solid silver')}" >
+                        <option value="">- Seleccione una opción -</option>
+                        <option ng-value="item.cve" ng-repeat="item in modalidadesTutoria" ng-bind="item.descripcion"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="plazas">
+                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Plazas
+                    </label>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th width="5%">No.</th>
+                                <th>Plaza</th>
+                                <th width="15%">CCT</th>
+                                <th width="15%" ng-if="data.cveTipoPlaza==='2'">Horas</th>
+                                <th width="10%">Operación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="plaza in data.plazas">
+                                <td>{{$index+1}}</td>
+                                <td>{{plaza.plaza}}</td>
+                                <td>{{plaza.cct}}</td>
+                                <td ng-if="data.cveTipoPlaza==='2'">{{plaza.horas}}</td>
+                                <td>
+                                    <input type="button" value="Eliminar"
+                                            class="btn btn-sm btn-info" ng-click="eliminaPlaza($index)" />
+                                </td>
+                            </tr>
+                            <tr ng-if="validaAdicionPlaza() && !container.showAdicionPlaza">
+                                <td colspan="3">&nbsp;</td>
+                                <td ng-if="data.cveTipoPlaza==='2'">&nbsp;</td>
+                                <td>
+                                    <input type="button" value="+" class="btn btn-sm btn-info" ng-click="habilitaAdicionPlaza()" />
+                                </td>
+                            </tr>
+                            <tr ng-if="container.showAdicionPlaza">
+                                <td>&nbsp;</td>
+                                <td>
+                                    <input class="form-control" id="plaza" name="plaza" ng-model="dataPlaza.plaza" placeholder="Ejemplo: 071352 E036319.0987654" />
+                                </td>
+                                <td>
+                                    <input class="form-control" id="cct" name="cct" ng-model="dataPlaza.cct" />
+                                </td>
+                                <td ng-if="data.cveTipoPlaza==='2'">
+                                    <select class="form-control" id="horas" name="horas" required ng-model="dataPlaza.horas">
+                                        <option value="">- Seleccione una opción -</option>
+                                        <option ng-value="item.cve" ng-repeat="item in horas" ng-bind="item.descripcion"></option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="button" ng-disabled="dataPlaza.plaza==='' || (dataPlaza.horas==='' && data.cveTipoPlaza==='2') || dataPlaza.cct===''" value="Agregar"
+                                            class="btn btn-sm btn-info" ng-click="validaDatosPlaza()" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="nota-llenado">
+                                    De clic en (+) y proporcione todos los datos solicitados sobre la plaza
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="form-group" ng-if="data.cveTipoPlaza==='2'">
+                    <label class="control-label" for="horasPlazas">
+                        Total de horas de plazas
+                    </label>
+                    <br />
+                    <input class="form-control" id="horasPlazas" name="horasPlazas" ng-model="data.horasPlazas" readonly />
+                </div>
+
+                <div class="form-group span-3-column">
+                    <div class="text-center">
+                        <input type="button" ng-disabled="valoracionForm.$pristine || valoracionForm.$invalid || !container.showContinuar || data.plazas.length===0" value="Continuar"
+                                class="btn btn-primary" ng-click="validaDatos()" />
+                    </div>
+                </div>
+            </form>
+            
+            <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
+                <div ng-show="messageAPI.show">
+                    <div ng-class="{'alert alert-success': messageAPI.isSuccess, 'alert alert-danger': messageAPI.isError}">
+                        <strong>¡Información!: </strong>
+                        <div ng-bind-html="messageAPI.msg"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="alert alert-danger"  ng-show="data.errores.length>0">
+                    <strong>¡Se presentaron problemas con los datos!: </strong>
+                    <br />
+                    <ul class="text-left">
+                        <li ng-repeat="error in data.errores"><span  ng-bind-html="error"></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+
+

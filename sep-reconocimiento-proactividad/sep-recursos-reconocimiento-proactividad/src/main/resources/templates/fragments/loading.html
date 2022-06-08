@@ -1,0 +1,12 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+    <div th:fragment="loading" class="cargando" ng-show="cargando">
+        <div>
+            <img alt="loading ..."  th:src="@{/img/loading.svg}" style="height: 150px;"/>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <link rel="shortcut icon" type="image/x-icon" href="https://framework-gb.cdn.gob.mx/favicon.ico" />
+        <title th:text="${@environment.getProperty('app.header.title')}"></title>
+        <div th:replace="fragments/header :: header-js"/>
+        <div th:replace="fragments/header :: header-css"/>
+        <script type="text/javascript" th:src="@{/js/lib/motorReglas.js?v=}+${@environment.getProperty('app.version')}"></script>
+    </head>
+    <body>
+        <main class="page">
+            <div th:replace="fragments/header :: header"/>
+            <div class="container" ng-app="modResumen"
+                 ng-controller="ctrlResumen as ctrl" th:attr="ng-init='initValues()'">
+                <div class="content">
+                    <div class="row">
+                        <ul th:replace="fragments/avance :: avance"/>                            
+                        <div class="text-center">
+                            <h3 class="texto_titulo_registro"
+                                th:text="${@environment.getProperty('app.menu.title.terminar')}"></h3>
+                            <img th:src="@{/img/Finalizado.png}" class="imagen_titulo_registro" />
+                            <hr class="red hr-titulo">
+                        </div>
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 searching" ng-cloak="">
+                            <div class="text-center" ng-show="container.showLoading">Cargando
+                                Información...
+                            </div>
+                        </div>
+                        <div th:replace="resumen/datos :: datos"/>
+                    </div>
+                </div>
+                    
+                <div th:replace="fragments/loading :: loading"/>
+                <div th:replace="fragments/footer :: footer"/>
+                <div th:replace="fragments/modal :: modal"/>
+            </div>
+        </main>
+        <!-- JS APP -->
+        <script type="text/javascript" th:src="@{/js/app/modResumen.js?v=}+${@environment.getProperty('app.version')}"></script>
+    </body>
+</html>

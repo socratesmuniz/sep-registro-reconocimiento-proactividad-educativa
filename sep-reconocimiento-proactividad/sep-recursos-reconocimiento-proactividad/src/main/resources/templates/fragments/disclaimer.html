@@ -1,0 +1,54 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div id="modalDisclaimerId" th:fragment="disclaimer" class="modalInfo modalRechazo" ng-cloak ng-show="$root.mDisclaimer.visible">
+    <div id="modalDisclaimerContent" class="modalContent" ng-class="$root.mDisclaimer.clase">
+        <div class="modal-header">
+            <h4>AVISO</h4>
+        </div>
+        <div class="modalInfoContainer row" style="margin: 20px;">
+            <h5 class="red" ng-bind="$root.mDisclaimer.modalMsg1"></h5>
+
+            <form name="disclaimerForm" role="form" novalidate autocomplete="off"
+                  ng-submit="$root.mDisclaimer.funcionModalAceptar()" class="form-horizontal">
+                <div class="form-group">
+                    <h5 ng-bind="$root.mDisclaimer.modalMsg2"></h5>
+
+                    <input class="form-control" id="aceptacionId" name="acepto" type="text"
+                           ng-model="mAcepto"
+                           ng-minlength="1"
+                           ng-maxlength="10"
+                           ng-pattern="/^ACEPTO$/"
+                           required onchange="document.getElementById('aceptacionId').value=document.getElementById('aceptacionId').value.toUpperCase()">
+                    <div class="alert-danger"
+                         ng-show="disclaimerForm.acepto.$touched && disclaimerForm.acepto.$error.required">
+                        Para continuar es requerido el mensaje de aceptación
+                    </div>
+                    <div class="alert-danger"
+                         ng-show="disclaimerForm.acepto.$error.maxlength">
+                        Se superó el máximo de letras permitidas (10)
+                    </div>
+                    <div class="alert-danger"
+                         ng-show="disclaimerForm.acepto.$error.pattern">
+                        Debe escribir la palabra ACEPTO
+                    </div>
+
+                </div>
+                <div class="h6 red" ng-bind="$root.mDisclaimer.modalMsgNote"></div>
+                <div class="form-group">
+                    <input ng-if="$root.mDisclaimer.funcionModalAceptar"
+                           type="submit"
+                           ng-disabled="disclaimerForm.$pristine || disclaimerForm.$invalid"
+                           class="btn btn-primary" value="{{$root.mDisclaimer.botonOkText}}">
+                    <button type="button" ng-if="$root.mDisclaimer.funcionModalCancelar" class="btn btn-danger"
+                            ng-click="$root.mDisclaimer.funcionModalCancelar()">Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

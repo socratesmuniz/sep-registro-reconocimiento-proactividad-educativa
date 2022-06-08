@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div th:fragment="cursos" ng-if="muestraCursos()">
+            <br />
+            <ul>
+                <li ng-repeat="item in cursosSelection">
+                    <span>{{recuperaNombreCurso(item)}}</span>
+                </li>
+            </ul>
+            <div class="text-center" ng-if="cursosSelection===0 || cursosSelection.length===0">
+                <span style="font-weight:bold; color:red;">Actualmente no tiene cursos seleccionados</span>
+            </div>
+            <button type="button" class="btn btn-info" ng-click="muestraSeleccionCursos()">
+                <i class="glyphicon glyphicon-check"></i>  Seleccionar Cursos
+            </button>
+            <br />
+            <div id="modalCursosId" class="modalInfo modalRechazo" ng-show="container.showBusquedaCursos">
+                <div id="modalCursos" class="modalContent">
+                    <div class="modal-header">
+                        <h4>Selección de cursos</h4>
+                    </div>
+                    <div class="modalInfoContainer row" style="margin: 20px;">
+                        <h5 class="red">
+                            Marca los cursos presentados
+                        </h5>
+                        <div>
+                            Filtrar por: <input ng-model="data.filtroCursos" type="text" placeholder="filtrar cursos" />
+                        </div>
+                        <div class="form-group" style="height:300px; overflow:auto;">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th width="5%" class="text-center"></th>
+                                        <th width="95%" class="text-center">Curso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in cursos | filter: data.filtroCursos">
+                                        <td style="vertical-align:top">
+                                            <input value="{{item.cve}}" ng-checked="cursosSelection.indexOf(item.cve) > -1" 
+                                                   ng-click="seleccionaCurso(item.cve)" type="checkbox" />
+                                        </td>
+                                        <td class="text-left">
+                                            [{{item.entidad}}] - {{item.descripcion}} - <strong>Año:</strong> {{item.anioImparticion}}
+                                             - <strong>Horas:</strong> {{item.horas}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="button" class="btn btn-danger" ng-click="ocultaSeleccionCursos()">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+	</div>
+    </body>
+</html>

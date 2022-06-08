@@ -1,0 +1,84 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <div th:fragment="datos" class="col-md-12 contenedor_formulario">   
+            <div class="text-justify">
+                <span ng-bind-html="textoFinalizacion()"></span>.
+            </div>
+            
+            <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
+                <div ng-show="messageAPI.show">
+                    <div ng-class="{'alert alert-success': messageAPI.isSuccess, 'alert alert-danger': messageAPI.isError}">
+                        <strong>¡Información!: </strong>
+                        <div ng-bind-html="messageAPI.msg"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group span-3-column">
+                <h3 class="red salto" th:text="${@environment.getProperty('app.menu.title.datospersonales')}"></h3>
+                <div>
+                    <strong>CURP: </strong>
+                    <span ng-bind-html="data.datosParticipacion.curpDocente"></span>
+                </div>
+                <div>
+                    <strong>Nombre: </strong>
+                    <span ng-bind-html="data.datosParticipacion.nombreDocente"></span>
+                </div>
+                <div>
+                    <strong>Primer apellido: </strong>
+                    <span ng-bind-html="data.datosParticipacion.primerApellidoDocente"></span>
+                </div>
+                <div>
+                    <strong>Segundo apellido: </strong>
+                    <span ng-bind-html="data.datosParticipacion.segundoApellidoDocente"></span>
+                </div>
+                <div>
+                    <strong>Folio: </strong>
+                    <span ng-bind-html="data.datosParticipacion.folio"></span>
+                </div>
+                <div>
+                    <strong>Estatus: </strong>
+                    <span ng-bind-html="getNombreEstado(data.datosParticipacion.cveEstado)"></span>
+                </div>
+            </div>
+            
+            <div class="form-group span-3-column">
+                <div class="text-center">
+                    <button type="button" ng-if="data.datosParticipacion.cveEstado==9"
+                            class="btn btn-primary" ng-click="imprimirRegistro()">
+                        <i class="glyphicon glyphicon-file"></i> Ficha de Registro
+                    </button>
+                    <button type="button" ng-if="data.datosParticipacion.cveEstado==3"
+                            class="btn btn-primary" ng-click="imprimirRechazo()">
+                        <i class="glyphicon glyphicon-file"></i> Ficha de No cumplimiento
+                    </button>
+                </div>
+            </div>
+            
+            <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
+                <div ng-show="messageAPI.show">
+                    <div ng-class="{'alert alert-success': messageAPI.isSuccess, 'alert alert-danger': messageAPI.isError}">
+                        <strong>¡Información!: </strong>
+                        <div ng-bind-html="messageAPI.msg"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group span-3-column">
+                <table border="0" width="100%">
+                    <tr>
+                        <td width="50%">
+                            <br /><br />
+                            <button type="button" class="btn btn-warning" ng-click="regresaModuloAnterior()">
+                                <i class="glyphicon glyphicon-arrow-left"></i>  Nuevo registro
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
+
+
+
