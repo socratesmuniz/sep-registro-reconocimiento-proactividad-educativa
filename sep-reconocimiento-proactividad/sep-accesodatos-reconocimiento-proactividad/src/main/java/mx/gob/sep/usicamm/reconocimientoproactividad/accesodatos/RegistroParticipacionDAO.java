@@ -23,15 +23,14 @@ public class RegistroParticipacionDAO extends BaseDAO{
     @LogExecutionTime
     public ParticipacionDTO selectParticipacion(Integer cveDocente){
         return jdbcTemplate.query(SQL.SQL_SEL_REGISTRO_PARTICIPACION,
-                new Object[]{config.CVE_SISTEMA, config.CVE_PROCESO, config.CVE_NIVEL, config.CVE_CICLO_ESCOLAR, cveDocente},
-                new int[]{Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.INTEGER}, 
+                new Object[]{config.CVE_SISTEMA, config.CVE_NIVEL, config.CVE_CICLO_ESCOLAR, cveDocente},
+                new int[]{Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.INTEGER}, 
                 MapperUtil::mapRowParticipacion).stream().findFirst().orElse(null);
     }
 
     @LogExecutionTime
     public boolean insertParticipacion(ParticipacionDTO participacion, Integer usuario) {
         return jdbcTemplate.update(SQL.SQL_INS_REGISTRO_PARTICIPACION,
-                config.CVE_PROCESO,
                 config.CVE_NIVEL,
                 config.CVE_CICLO_ESCOLAR,
                 participacion.getCveDocente(),
@@ -51,7 +50,6 @@ public class RegistroParticipacionDAO extends BaseDAO{
                 participacion.getCveServicioEducativo(),
                 participacion.getCveModalidad(),
                 participacion.getCveCct(),
-                config.CVE_PROCESO,
                 config.CVE_NIVEL,
                 config.CVE_CICLO_ESCOLAR,
                 participacion.getCveDocente(),
@@ -62,7 +60,6 @@ public class RegistroParticipacionDAO extends BaseDAO{
     @LogExecutionTime
     public boolean deleteParticipacion(ParticipacionDTO participacion) {
         return jdbcTemplate.update(SQL.SQL_DEL_REGISTRO_PARTICIPACION,
-                config.CVE_PROCESO,
                 config.CVE_NIVEL,
                 config.CVE_CICLO_ESCOLAR,
                 participacion.getCveDocente(),
@@ -77,7 +74,6 @@ public class RegistroParticipacionDAO extends BaseDAO{
                 evento,
                 cveDocente,
                 cveDocenteModificador,
-                this.config.CVE_PROCESO,
                 this.config.CVE_NIVEL,
                 this.config.CVE_CICLO_ESCOLAR,
                 cveDocente,

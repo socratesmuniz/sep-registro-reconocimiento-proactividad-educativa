@@ -55,24 +55,13 @@ public class ValidacionAcceso{
         ResponseValidacion response;
         Map<String,String> datosValidacion;
         RequestValidacion requestValidacion;
-        String dominio;
-        boolean validaDominio=false;
         
         log.info("Esta conectandose a: "+host);
         
         if(Constantes.NONE.equals(curp) || this.validaParametroToken(token)){
             model.addAttribute(Constantes.MSG_ERROR, Constantes.NO_DATA_AUTHENTICATE);
         } 
-        else{
-            //recupera si esta activa la validacion de dominio
-            try{
-                validaDominio=(this.repository.selectParametro(Constantes.PARAMETRO_DOMINIO)>0);
-            }
-            catch(Exception ex){
-                log.warn("No se logro recuperar el valor para el parametro: "+Constantes.PARAMETRO_DOMINIO);
-                validaDominio=false;
-            }
-            
+        else{            
             if(this.validaToken(token, curp)){
                 try{
                     UsuarioDTO usuario=this.repository.selectUsuario(curp);

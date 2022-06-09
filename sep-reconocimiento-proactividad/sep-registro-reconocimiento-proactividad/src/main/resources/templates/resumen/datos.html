@@ -2,7 +2,7 @@
     <body>
         <div th:fragment="datos" class="col-md-12 contenedor_formulario">
             <div class="text-justify">
-                <p>Por favor revise los datos y de clic en Continuar.</p>
+                <p>Por favor revise los datos y de clic en Finalizar.</p>
             </div>
             
             <div class="form-group span-3-column">
@@ -55,90 +55,35 @@
                 <h3 class="red salto" th:text="${@environment.getProperty('app.menu.title.participacion')}"></h3>
                 <div>
                     <strong>Entidad federativa donde labora: </strong>
-                    <span ng-bind-html="data.datosParticipacion.entidad"></span>
-                </div>
-                <div ng-if="(data.datosParticipacion.municipio!==null && data.datosParticipacion.municipio!=='')">
-                    <strong>Municipio: </strong>
-                    <span ng-bind-html="data.datosParticipacion.municipio"></span>
+                    <span ng-bind-html="mainData.nombreEntidad"></span>
                 </div>
                 <div>
-                    <strong>Sostenimiento: </strong>
-                    <span ng-bind-html="data.datosParticipacion.sostenimiento"></span>
+                    <strong>Año de aplicación: </strong>
+                    <span ng-bind-html="mainData.cveAnioAplicacion"></span>
                 </div>
                 <div>
-                    <strong>Función: </strong>
-                    <span ng-bind-html="data.datosParticipacion.puestoActual"></span>
+                    <strong>Nombre del trabajo a presentar: </strong>
+                    <span ng-bind-html="mainData.nombreTrabajo"></span>
                 </div>
                 <div>
-                    <strong>Nivel o servicio: </strong>
-                    <span ng-bind-html="data.datosParticipacion.servicioEducativo"></span>
+                    <strong>Tipo de sostenimiento: </strong>
+                    <span ng-bind-html="mainData.nombreSostenimiento"></span>
                 </div>
                 <div>
-                    <strong>Categoría: </strong>
-                    <span>{{data.datosParticipacion.cveCategoriaActual}} - {{data.datosParticipacion.categoriaActual}}</span>
+                    <strong>Modalidad o servicio: </strong>
+                    <span ng-bind-html="mainData.nombreServicio"></span>
                 </div>
                 <div>
-                    <strong>Tipo de plaza: </strong>
-                    <span ng-bind-html="data.datosParticipacion.tipoPlaza"></span>
-                </div>
-                <div>
-                    <strong>Tipo de reconocimiento (asesoría, apoyo y acompañamiento): </strong>
-                    <span ng-bind-html="data.datosParticipacion.valoracion"></span>
-                </div>
-                <div>
-                    <strong>Año de la Convocatoria: </strong>
-                    <span>2022-2023</span>
-                </div>
-                <div>
-                    <strong>Años anteriores de participación: </strong>
-                    <span ng-repeat="anio in aniosParticipacion">{{anio.descripcionDato}}{{($index>0? ', ': '')}}</span>
-                    <span ng-if="!aniosParticipacion || !aniosParticipacion.length || aniosParticipacion.length===0">Ninguno</span>
-                </div>
-                <div ng-if="data.datosParticipacion.cveModalidadTutoria">
-                    <strong>Modalidad: </strong>
-                    <span ng-bind-html="data.datosParticipacion.modalidadTutoria"></span>
-                </div>
-                <div>
-                    <strong>Plazas: </strong>
-                    <span ng-repeat="plaza in data.datosParticipacion.plazas">
-                        {{plaza.plaza}} - {{plaza.cct}}{{(data.datosParticipacion.cveTipoPlaza==='2'? ' ('+plaza.horas+')': '')}}{{($index>0? ', ': '')}}
-                    </span>
-                </div>
-            </div>
-            <hr style="height: 5px; background-color: darkred;"/>
-            
-            <div class="form-group span-3-column">
-                <h3 class="red salto" th:text="${@environment.getProperty('app.menu.title.requisitos')}"></h3>
-                <div ng-repeat="item in requisitos" ng-if="getRespuestaRequisito(item.cve)!==null">
-                    <strong ng-bind-html="item.descripcion"></strong>: 
-                    <span ng-bind-html="getRespuestaRequisito(item.cve)"></span>
-                </div>
-            </div>
-            <hr style="height: 5px; background-color: darkred;"/>
-            
-            <div class="form-group span-3-column">
-                <h3 class="red salto" th:text="${@environment.getProperty('app.menu.title.factores')}"></h3>
-                <div ng-repeat="item in factores" ng-if="getRespuestaFactor(item.cve)!==null">
-                    <strong ng-bind-html="item.descripcion"></strong>: 
-                    <span ng-bind-html="getRespuestaFactor(item.cve)"></span>
-                    <div ng-if="item.cve===29 && getRespuestaFactor(item.cve)==='si'">
-                        <strong>Cursos seleccionados</strong>
-                        <ul>
-                            <li ng-repeat="curso in cursosSeleccionados">{{curso.descripcion}}</li>
-                        </ul>
-                    </div>
+                    <strong>Cntro de trabajo: </strong>
+                    <span ng-bind-html="(mainData.cveCct)"></span>
                 </div>
             </div>
             <hr style="height: 5px; background-color: darkred;"/>
 
             <div class="form-group span-3-column">
                 <div class="text-center">
-                    <button type="button" class="btn btn-info" ng-click="validaDatosRegistro()"
-                            style="background-color: #3bb452;">
-                        <i class="glyphicon glyphicon-file"></i> Imprimir ficha de registro
-                    </button>
-                    <input type="button" ng-disabled="!container.showContinuar" value="Continuar"
-                            class="btn btn-primary" ng-click="continuar()" />
+                    <input type="button" ng-disabled="!container.showContinuar" value="Finalizar"
+                            class="btn btn-primary" ng-click="validaDatos()" />
                 </div>
             </div>
             
@@ -166,13 +111,6 @@
                     <tr>
                         <td width="50%">
                             <span th:replace="fragments/botonRegresar :: boton_regresar" />
-                        </td>
-                        <td width="50%" class="text-right">
-                            <br /><br />
-                            <button type="button" class="btn btn-warning" ng-click="regresaBusquedaDocente()"
-                                     ng-disabled="!container.showContinuar">
-                                <i class="glyphicon glyphicon-search"></i>  Ingresar otra curp
-                            </button>
                         </td>
                     </tr>
                 </table>

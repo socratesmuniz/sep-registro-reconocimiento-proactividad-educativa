@@ -7,6 +7,7 @@ import mx.gob.sep.usicamm.reconocimientoproactividad.accesodatos.mapeos.MapperUt
 import mx.gob.sep.usicamm.reconocimientoproactividad.accesodatos.util.SQL;
 import mx.gob.sep.usicamm.reconocimientoproactividad.configuracion.ConfiguracionAplicacion;
 import mx.gob.sep.usicamm.reconocimientoproactividad.entidades.CatalogoDTO;
+import mx.gob.sep.usicamm.reconocimientoproactividad.entidades.CctDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -30,10 +31,26 @@ public class CatalogosDAO extends BaseDAO{
     }
 
     @LogExecutionTime
-    public List<CatalogoDTO> selectSostenimientos(int entidad, Integer municipio){
-        return jdbcTemplate.query(SQL.SQL_SEL_CAT_SOSTENIMIENTOS_ENTIDAD,
-                new Object[]{config.CVE_PROCESO, config.CVE_NIVEL, config.CVE_CICLO_ESCOLAR, entidad}, 
-                new int[]{Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.INTEGER}, 
+    public List<CatalogoDTO> selectSostenimientos(int entidad){
+        return jdbcTemplate.query(SQL.SQL_SEL_CAT_SOSTENIMIENTOS,
+                new Object[]{entidad}, 
+                new int[]{Types.INTEGER}, 
                 MapperUtil::mapRowCatalogo);
+    }
+
+    @LogExecutionTime
+    public List<CatalogoDTO> selectServicios(){
+        return jdbcTemplate.query(SQL.SQL_SEL_CAT_SERVICIOS,
+                new Object[]{this.config.CVE_SISTEMA, this.config.CVE_NIVEL}, 
+                new int[]{Types.INTEGER, Types.INTEGER}, 
+                MapperUtil::mapRowCatalogo);
+    }
+
+    @LogExecutionTime
+    public CctDTO selectCctByCve(String cve){
+        return jdbcTemplate.query(SQL.SQL_SEL_CAT_CCT,
+                new Object[]{cve}, 
+                new int[]{Types.VARCHAR}, 
+                MapperUtil::mapRowCct).stream().findFirst().orElse(null);
     }
 }

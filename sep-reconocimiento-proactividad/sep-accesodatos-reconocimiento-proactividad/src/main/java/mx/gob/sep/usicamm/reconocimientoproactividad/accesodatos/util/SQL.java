@@ -9,7 +9,9 @@ public enum SQL {
 
     // --- Catalogos ---
     public static final String SQL_SEL_CAT_ENTIDADES="SELECT cve_entidad cve, descripcion_corta descripcion FROM cat_entidades_federativas WHERE cve_entidad<=32 ORDER BY descripcion;";
-    public static final String SQL_SEL_CAT_SOSTENIMIENTOS_ENTIDAD="SELECT RTEP.cve_cat_sostenimiento cve, CS.descripcion_corta descripcion FROM registro_tipos_evaluaciones_procesos RTEP INNER JOIN cat_tipos_sostenimientos CS ON RTEP.cve_cat_sostenimiento=CS.cve_tipo_sostenimiento WHERE RTEP.cve_cat_proceso=? AND RTEP.cve_cat_nivel_educativo=? AND RTEP.cve_cat_ciclo_escolar=? AND RTEP.cve_cat_entidad=? %s GROUP BY 1, 2 ORDER BY 2;";
+    public static final String SQL_SEL_CAT_SOSTENIMIENTOS="SELECT ES.cve_cat_tipo_sostenimiento cve, S.descripcion_corta descripcion FROM entidades_sostenimientos ES INNER JOIN cat_tipos_sostenimientos S ON ES.cve_cat_tipo_sostenimiento=S.cve_tipo_sostenimiento AND fecha_inicio_vigencia<=CURRENT_DATE() AND (fecha_fin_vigencia IS NULL OR fecha_fin_vigencia>=CURRENT_DATE) AND ES.cve_cat_entidad_federativa=? ORDER BY 2;";
+    public static final String SQL_SEL_CAT_SERVICIOS="SELECT CONCAT(CMS.cve_cat_servicio_educativo, '-', CMS.cve_cat_modalidad) cve, CMS.descripcion_usuario descripcion FROM ctrl_cat_modalidades_servicios_educativos CMS WHERE CMS.cve_cat_sistema_informacion=? AND CMS.cve_cat_nivel_educativo=? ORDER BY 2;";
+    public static final String SQL_SEL_CAT_CCT="SELECT cv_cct, c_nombre, inmueble_c_vialidad_principal, inmueble_c_nom_mun, inmueble_c_nom_loc, inmueble_n_extnum, contacto_c_telefono, c_tipo FROM cat_cct WHERE cv_cct=?;";
     // --- Catalogos ---
 
     

@@ -13,6 +13,5 @@ public enum ConstantesWeb {
     public static final String TEMPLATE_AVISO="aviso";    
     public static final String TEMPLATE_PARTICIPACION="participacion/inicio";    
     public static final String TEMPLATE_RESUMEN="resumen/inicio";    
-    public static final String TEMPLATE_DATOS_PERSONALES="datos-personales/inicio";    
     public static final String TEMPLATE_FINALIZADO="finalizado/inicio";    
 }

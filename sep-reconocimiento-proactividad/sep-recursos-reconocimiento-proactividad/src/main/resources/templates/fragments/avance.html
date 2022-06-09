@@ -3,30 +3,22 @@
     <head>
     </head>
     <body>
-        <ul th:fragment="avance" class="wizard-steps-extensive" style="width: 100%">
+        <ul th:fragment="avance" class="wizard-steps" style="width: 100%">
             <li ng-class="{'completed': avanceFormulario.datosPersonales}">
                 <h5>1</h5>
                 <span>Datos personales</span>
             </li>
-            <li ng-class="{'completed': avanceFormulario.valoracion}">
+            <li ng-class="{'completed': avanceFormulario.participacion}">
                 <h5>2</h5>
                 <span>Participación</span>
             </li>
-            <li ng-class="{'completed': avanceFormulario.requisitos}">
-                <h5>3</h5>
-                <span>Requisitos</span>
-            </li>
-            <li ng-class="{'completed': avanceFormulario.factores}">
-                <h5>4</h5>
-                <span>Elementos multifactoriales</span>
-            </li>
             <li ng-class="{'completed': avanceFormulario.resumen}">
-                <h5>5</h5>
+                <h5>3</h5>
                 <span>Resumen</span>
             </li>
-            <!--li ng-class="{'success': avanceFormulario.registrado}">
+            <li ng-class="{'success': avanceFormulario.registrado}">
                 <i class="glyphicon glyphicon-ok-circle"></i>
-            </li-->
+            </li>
         </ul>
     </body>
 </html>

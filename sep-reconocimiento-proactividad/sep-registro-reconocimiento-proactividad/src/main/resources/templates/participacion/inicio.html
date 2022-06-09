@@ -20,7 +20,6 @@
                         <div class="col-md-12 text-center">
                             <h3 class="texto_titulo_registro"
                                 th:text="${@environment.getProperty('app.menu.title.participacion')}"></h3>
-                            <img th:src="@{/img/Participacion.png}" class="imagen_titulo_registro" />
                             <hr class="red hr-titulo">
                         </div>
                         <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 searching" ng-cloak="">
@@ -28,7 +27,7 @@
                                 Información...
                             </div>
                         </div>
-                        <div th:replace="valoracion/formulario :: formulario"/>
+                        <div th:replace="participacion/formulario :: formulario"/>
                     </div>
                 </div>
                     
@@ -37,6 +36,6 @@
             </div>
         </main>
         <!-- JS APP -->
-        <script type="text/javascript" th:src="@{/js/app/modValoracion.js?v=}+${@environment.getProperty('app.version')}"></script>
+        <script type="text/javascript" th:src="@{/js/app/modParticipacion.js?v=}+${@environment.getProperty('app.version')}"></script>
     </body>
 </html>

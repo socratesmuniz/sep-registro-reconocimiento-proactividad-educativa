@@ -7,43 +7,137 @@
         <title th:text="${@environment.getProperty('app.header.title')}"></title>
         <div th:replace="fragments/header :: header-css"/>
         <div th:replace="fragments/header :: header-js"/>
+        <script type="text/javascript" th:src="@{/js/lib/motorReglas.js?v=}+${@environment.getProperty('app.version')}"></script>
     </head>
     <body>
         <main class="page">
             <div th:replace="fragments/header :: header"/>
-            <div class="container" ng-app="homeModule"  ng-controller="homeCtrl" th:attr="ng-init='initValues(\''+${curp}+'\','+${cveDocente}+','+${cveEntidad}+','+${cveMunicipio}+',\''+${token}+'\',\''+${tokenOriginal}+'\')'">
+            <div class="container" ng-app="homeModule"  ng-controller="homeCtrl" th:attr="ng-init='initValues(\''+${curp}+'\','+${cveDocente}+',\''+${token}+'\',\''+${tokenOriginal}+'\',\''+${@environment.getProperty('url.app.datospersonales')}+'\')'">
                 <div class="content">
                     <data th:value="${nombre}" id="nombre"/>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 text-center">
                             <h3 class="text-center titulo_registro_bienvenidos">Bienvenido</h3>
-                            <hr class="red hr-titulo">
+                            <hr class="red hr-titulo" />
                         </div>
 
-                        <div class="col-md-12" style="text-align: justify" ng-bind-html="msg">
-                        </div>
-                        <div class="col-md-12">
-                            <br /><br />
-                            <div class="form-group span-3-column">
-                                <div class="text-center">
-                                    <input type="button" value="Continuar" class="btn botonguardar btn-primary"
-                                         ng-click="iniciar()" />
-                                    &nbsp;&nbsp;
-                                    <a href="#" onclick="quitTab('quit')" type="button" class="btn btn-danger">Cerrar</a>
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
+                            <div ng-show="messageAPI.show">
+                                <div ng-class="{'alert alert-success': messageAPI.isSuccess, 'alert alert-danger': messageAPI.isError}">
+                                    <strong>¡Información!: </strong>
+                                    <div ng-bind-html="messageAPI.msg"></div>
                                 </div>
                             </div>
+                        </div>
+                        
+                        <br />
+                        <form name="docenteForm" role="form" novalidate autocomplete="off" class="col-md-12">
+                            <div class="form-group span-3-column">
+                                <label class="control-label" for="curp">
+                                    CURP
+                                </label>
+                                <br />
+                                <input class="form-control" type="text" name="curp" id="curp" 
+                                    ng-style="{'border':(docenteForm.curp.$invalid? '2px solid red': '1px solid silver')}" 
+                                    readonly ng-model="mainData.curp"> 
+                            </div>
+                            <div class="form-group span-3-column">
+                                <label class="control-label" for="nombre">
+                                    Nombre
+                                </label>
+                                <br />
+                                <input class="form-control" type="text" name="nombre"
+                                    ng-style="{'border':(docenteForm.nombre.$invalid? '2px solid red': '1px solid silver')}" 
+                                    readonly ng-model="data.datosDocente.nombre" /> 
+                            </div>
+                            <div class="form-group span-3-column">
+                                <label class="control-label" for="primerApellido">
+                                    Primer apellido
+                                </label>
+                                <br />
+                                <input class="form-control" type="text" name="primerApellido"
+                                    ng-style="{'border':(docenteForm.primerApellido.$invalid? '2px solid red': '1px solid silver')}" 
+                                    readonly ng-model="data.datosDocente.primerApellido" /> 
+                            </div>
+                            <div class="form-group span-3-column">
+                                <label class="control-label" for="segundoApellido">
+                                    Segundo apellido
+                                </label>
+                                <br />
+                                <input class="form-control" type="text" name="segundoApellido"
+                                    ng-style="{'border':(docenteForm.segundoApellido.$invalid? '2px solid red': '1px solid silver')}" 
+                                    readonly ng-model="data.datosDocente.segundoApellido" /> 
+                            </div>
+                            <div class="form-group span-3-column">
+                                <label class="control-label" for="telefono1">
+                                    Número telefónico 1
+                                </label>
+                                <br />
+                                <input class="form-control" name="telefono1"
+                                    ng-style="{'border':(docenteForm.telefono1.$invalid? '2px solid red': '1px solid silver')}" 
+                                    readonly ng-model="data.datosDocente.telefono1" /> 
+                            </div>
+                            <div class="form-group span-3-column">
+                                <label class="control-label" for="telefono2">
+                                    Número telefónico 2
+                                </label>
+                                <br />
+                                <input class="form-control" name="telefono2"
+                                    ng-style="{'border':(docenteForm.telefono2.$invalid? '2px solid red': '1px solid silver')}" 
+                                    readonly ng-model="data.datosDocente.telefono2" /> 
+                            </div>
+                            <div class="form-group span-3-column">
+                                <label class="control-label" for="correo1">
+                                    Correo electrónico 1
+                                </label>
+                                <br />
+                                <input class="form-control" name="correo1"
+                                    ng-style="{'border':(docenteForm.correo1.$invalid? '2px solid red': '1px solid silver')}" 
+                                    readonly ng-model="data.datosDocente.correo1" /> 
+                            </div>
+                            <div class="form-group span-3-column">
+                                <label class="control-label" for="correo2">
+                                    Correo electrónico 2
+                                </label>
+                                <br />
+                                <input class="form-control" name="correo2"
+                                    ng-style="{'border':(docenteForm.correo2.$invalid? '2px solid red': '1px solid silver')}" 
+                                    readonly ng-model="data.datosDocente.correo2" /> 
+                            </div>
 
-                            <div class="row span-3-column">
-                                <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
-                                    <div ng-show="messageAPI.show">
-                                        <div
-                                                ng-class="{'alert alert-success': messageAPI.isSuccess, 'alert alert-danger': messageAPI.isError}">
-                                            <strong>¡Información!: </strong>
-                                            <div ng-bind-html="messageAPI.msg"></div>
-                                        </div>
-                                    </div>
+                            <div class="form-group span-3-column">
+                                <div class="text-center">
+                                    <input type="button" ng-disabled="docenteForm.$invalid || !container.showContinuar" value="Continuar"
+                                            class="btn btn-primary" ng-click="continuar()" />
+                                    &nbsp;&nbsp;
+                                    <button class="btn botoneditar btn-warning" type="button" ng-click="abreDatosPersonales()">
+                                       <span class="glyphicon glyphicon-pencil"> </span> Modificar Datos
+                                   </button>
+                                    &nbsp;&nbsp;
+                                    <a href="#" onclick="quitTab('quit')" type="button" class="btn btn-danger">
+                                        <span class="glyphicon glyphicon-remove"> </span> Cerrar
+                                    </a>
                                 </div>
-                            </div>                            
+                            </div>
+                        </form>
+
+                        <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
+                            <div ng-show="messageAPI.show">
+                                <div ng-class="{'alert alert-success': messageAPI.isSuccess, 'alert alert-danger': messageAPI.isError}">
+                                    <strong>¡Información!: </strong>
+                                    <div ng-bind-html="messageAPI.msg"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8 col-sm-offset-2">
+                            <div class="alert alert-danger"  ng-show="data.errores.length>0">
+                                <strong>¡Se presentaron problemas con los datos!: </strong>
+                                <br />
+                                <ul class="text-left">
+                                    <li ng-repeat="error in data.errores"><span  ng-bind-html="error"></span></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,22 +1,23 @@
 angular.module('homeModule', ['ngSanitize', 'ngRoute'])
     .constant('RUTAS', {
-        URL_COMENZAR: './datos-personales'
+        URL_PARTICIPACION: './participacion'
     })
     .constant('API',
         (function () {
             const API_URL='./api/';
             return {
                 //datos de catalogos
-                API_MENSAJE : API_URL+'bienvenida'
+                API_GET_DOCENTE: API_URL + 'docentes/get-curp/',
                 //datos de operacion
             };
         })()
     )
-    .run(function () {
-
+    .run(function ($rootScope, $sce, $http){
+        $http.defaults.headers.common.Authorization=sessionStorage.getItem('token');
     })
-    .controller('homeCtrl', ['$scope', 'RUTAS', 'API', '$http',function ($scope, RUTAS, API, $http) {
+    .controller('homeCtrl', ['$scope', 'RUTAS', 'API', '$http', '$window',function ($scope, RUTAS, API, $http, $window) {
         //constantes
+        const MODULO_DATOS_PERSONALES='DP';
 
         //variables
         //datos de formulario
@@ -25,6 +26,7 @@ angular.module('homeModule', ['ngSanitize', 'ngRoute'])
         //datos de sesion
         $scope.mainData={};
         $scope.cargando=false;
+        $scope.data.errores=[];
 
         $scope.messageAPI={
             show: false,
@@ -52,8 +54,9 @@ angular.module('homeModule', ['ngSanitize', 'ngRoute'])
         };
         
         $scope.container={
-            showLoading: true
-        };    
+            showLoading: true,
+            showContinuar: false
+        };
 
 
         //funciones
@@ -63,72 +66,94 @@ angular.module('homeModule', ['ngSanitize', 'ngRoute'])
             console.log(COD_ERROR+" - "+getMsgStatus(reason.status));
         };
 
-        $scope.initValues=function (curp, cveDocente, cveEntidad, cveMunicipio, token, tokenOriginal) {
+        $scope.initValues=function (curp, cveDocente, token, tokenOriginal, url) {
+            console.log("URL: "+url);
+            $scope.mainData.urlDatosPersonales=url;
             if(curp!==null && curp!=='' && curp!=='null' && curp!==undefined){
-                $scope.mainData.usuarioCurp=curp;
-                sessionStorage.setItem('usuarioCurp', curp);
+                $scope.mainData.curp=curp;
+                sessionStorage.setItem('curp', curp);
             }
             if(cveDocente!==null && cveDocente!=='' && cveDocente!=='null' && cveDocente!==undefined){
-                $scope.mainData.cveUsuario=cveDocente;
-                sessionStorage.setItem('cveUsuario', cveDocente);
+                $scope.mainData.cveDocente=cveDocente;
+                sessionStorage.setItem('cveDocente', cveDocente);
             }
-            else if(sessionStorage.getItem('cveUsuario')!==null){
-                $scope.mainData.cveUsuario=sessionStorage.getItem('cveUsuario');
-            }
-            if(cveEntidad!==null && cveEntidad!=='' && cveEntidad!=='null' && cveEntidad!==undefined){
-                $scope.mainData.cveEntidad=cveEntidad;
-                sessionStorage.setItem('cveEntidad', cveEntidad);
-            }
-            else if(sessionStorage.getItem('cveEntidad')!==null){
-                $scope.mainData.cveEntidad=sessionStorage.getItem('cveEntidad');
-            }
-            if(cveMunicipio!==null && cveMunicipio!=='' && cveMunicipio!=='null' && cveMunicipio!==undefined){
-                $scope.mainData.cveMunicipio=cveMunicipio;
-                sessionStorage.setItem('cveMunicipio', cveMunicipio);
-            }
-            else if(sessionStorage.getItem('cveMunicipio')!==null){
-                $scope.mainData.cveMunicipio=sessionStorage.getItem('cveMunicipio');
+            else if(sessionStorage.getItem('cveDocente')!==null){
+                $scope.mainData.cveDocente=sessionStorage.getItem('cveDocente');
             }
             if(token!==null && token!=='' && token!=='null' && token!==undefined){
                 $scope.mainData.token=token;
                 sessionStorage.setItem('token', token);
             }
             if(tokenOriginal!==null && tokenOriginal!=='' && tokenOriginal!=='null' && tokenOriginal!==undefined){
+                $scope.mainData.tokenOriginal=tokenOriginal;
                 sessionStorage.setItem('tokenOriginal', tokenOriginal);
             }
             
-            $scope.getMensaje();
-            console.log("cargando: "+$scope.cargando+", cveDocente:"+cveDocente+", curp:"+curp+", cveUsuario:"+$scope.mainData.cveUsuario);
-            console.log("Entidad del usuario:"+$scope.mainData.cveEntidad);
-            console.log("Municipio del usuario:"+$scope.mainData.cveMunicipio);
+            $scope.getDatosDocente();
+            console.log("cargando: "+$scope.cargando+", cveDocente:"+cveDocente+", curp:"+curp);
         };
 
-
-        $scope.getMensaje=function(){
+        
+        $scope.getDatosDocente=function(){
             $scope.messageAPI.clean();
+            $scope.data.errores=[];
             $scope.cargando=true;
+            
+            if($scope.mainData.curp!==null && $scope.mainData.curp!==""){
+                $http.get(API.API_GET_DOCENTE+$scope.mainData.curp).then(function(response){
+                        $scope.cargando=false;
 
-            $http.get(API.API_MENSAJE).then(function (response){
-                    $scope.cargando=false;
-                    
-                    if(response.data.code===COD_OK) {
-                        $scope.container.showLoading=false;
-
-                        if(response.data.response){
-                            $scope.msg=response.data.response;
+                        if (response.data.code===COD_OK){
+                            if(response.data.response!==null){
+                                $scope.data.datosDocente=response.data.response;
+                                $scope.validaDatos();
+                            }
+                            else{
+                                $scope.messageAPI.showMsg(COD_ERROR, "No se tienen datos del participante");
+                                $scope.container.showContinuar=false;
+                            }
                         }
-                    } else{
-                        $scope.messageAPI.showMsg(response.data.code, response.data.msg);
-                    }
-                }, responseError);
+                        else {
+                            $scope.messageAPI.showMsg(response.data.code, response.data.msg);
+                            $scope.container.showContinuar=false;
+                        }
+                    }, responseError);
+            }
+        };
+            
+        $scope.validaDatos=function(){
+            $scope.cargando=true;
+            let request={
+                cve_docente: $scope.data.datosDocente.cveDocente,
+                curp: $scope.data.datosDocente.curp,
+                nombre: $scope.data.datosDocente.nombre,
+                telefono1: $scope.data.datosDocente.telefono1,
+                correo1: $scope.data.datosDocente.correo1,
+                entidad: $scope.data.cveEntidad
+            };
+            
+            $scope.data.errores=[];
+            validaRegla($scope, $http, responseError, $scope.mainData.cveDocente, MODULO_DATOS_PERSONALES, request, $scope.revisaErrores);
         };
 
+
+        $scope.revisaErrores=function(){
+            $scope.cargando=false;
+            
+            if($scope.data.errores && $scope.data.errores.length===0){
+                $scope.container.showContinuar=true;
+            }
+        };
+        
+        $scope.abreDatosPersonales=function(){
+            $window.open($scope.mainData.urlDatosPersonales+$scope.mainData.curp+"&token="+$scope.mainData.tokenOriginal, "datospersonales");
+        };
         
         $scope.getNombreCompleto=function(docente){
             return docente.nombre+" "+docente.primerApellido+" "+docente.segundoApellido;
         };
         
-        $scope.iniciar=function(){
-            location.href=RUTAS.URL_COMENZAR;
+        $scope.continuar=function(){
+            location.href=RUTAS.URL_PARTICIPACION;
         };
     }]);

@@ -3,13 +3,13 @@ logging:
     org.apache.catalina.core: ERROR
     org.springframework: ERROR
     com.zaxxer.hikari: warn
-    mx.gob.sep: INFO
+    mx.gob.sep: debug
   pattern:
-    console: "%highlight([%-5level]) %d{dd-MM-yyyy HH:mm:ss.SSS} [RegistroREC] [ %-25.25thread ] - [ ID:124, USUARIO:%X{user:-NO USER}, IP:%X{ip:-localhost}]  %magenta([ CLASS: %-50.50c ]) - %cyan([ METHOD: %-40.40M{39} ]) --- [ %m ] %n"
+    console: "%highlight([%-5level]) %d{dd-MM-yyyy HH:mm:ss.SSS} [RegistroRPE] [ %-25.25thread ] - [ ID:128, USUARIO:%X{user:-NO USER}, IP:%X{ip:-localhost}]  %magenta([ CLASS: %-50.50c ]) - %cyan([ METHOD: %-40.40M{39} ]) --- [ %m ] %n"
 
 app:
   header:
-    title: Registro para el Reconocimiento de Proactividad Academica
+    title: Registro para el Reconocimiento de proactividad academica
 
   menu:
     title:

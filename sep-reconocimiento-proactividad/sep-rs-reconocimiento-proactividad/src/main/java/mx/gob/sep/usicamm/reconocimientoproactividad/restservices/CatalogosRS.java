@@ -42,11 +42,30 @@ public class CatalogosRS {
 
     @LogRESTTime
     @GetMapping(value="/sostenimientos-entidad/get/{cveEntidad}")
-    public ResponseEntity<?> getSostenimientos(@PathVariable Integer cveEntidad, @RequestParam(defaultValue="0") Integer cveMunicipio,
-            @RequestParam(defaultValue="0") Integer cveSostenimiento){
+    public ResponseEntity<?> getSostenimientos(@PathVariable Integer cveEntidad){
         return RespuestaRestParser.parse(new Callable<Object>() {
             public Object call() throws AccesoDatosExcepcion, OperacionInvalidaBdException {
-                return service.getSostenimientos(cveEntidad, cveMunicipio);
+                return service.getSostenimientos(cveEntidad);
+            }
+         }, null);
+    }
+
+    @LogRESTTime
+    @GetMapping(value="/servicios/get")
+    public ResponseEntity<?> getServicios(){
+        return RespuestaRestParser.parse(new Callable<Object>() {
+            public Object call() throws AccesoDatosExcepcion, OperacionInvalidaBdException {
+                return service.getServicios();
+            }
+         }, null);
+    }
+
+    @LogRESTTime
+    @GetMapping(value="/cct/get/{cveCct}")
+    public ResponseEntity<?> getCct(@PathVariable String cveCct){
+        return RespuestaRestParser.parse(new Callable<Object>() {
+            public Object call() throws AccesoDatosExcepcion, OperacionInvalidaBdException {
+                return service.getCct(cveCct);
             }
          }, null);
     }

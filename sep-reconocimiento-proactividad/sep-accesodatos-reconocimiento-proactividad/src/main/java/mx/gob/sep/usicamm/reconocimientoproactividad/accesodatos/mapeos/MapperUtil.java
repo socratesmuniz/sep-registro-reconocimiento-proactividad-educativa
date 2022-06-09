@@ -24,6 +24,19 @@ public class MapperUtil {
         );
     }
 
+    public static CctDTO mapRowCct(ResultSet resultSet, int rowNum) throws SQLException {
+        return new CctDTO(
+                resultSet.getString("cv_cct"),
+                resultSet.getString("c_nombre"),
+                resultSet.getString("inmueble_c_vialidad_principal"),
+                resultSet.getString("inmueble_c_nom_mun"),
+                resultSet.getString("inmueble_c_nom_loc"),
+                resultSet.getString("inmueble_n_extnum"),
+                resultSet.getString("contacto_c_telefono"),
+                resultSet.getString("c_tipo")
+        );
+    }
+
     public static Integer mapRowInteger(ResultSet resultSet, int rowNum) throws SQLException {
         return resultSet.getInt(1);
     }

@@ -73,6 +73,12 @@ public class MotorReglasRS {
         if(modulo!=null && modulo.equals("PAR")){
             return this.config.REGLA_PARTICIPACION;
         }
+        else if(modulo!=null && modulo.equals("DP")){
+            return this.config.REGLA_DATOS_PERSONALES;
+        }
+        else if(modulo!=null && modulo.equals("RG")){
+            return this.config.REGLA_DATOS_REGISTRO;
+        }
         else{
             return 0;
         }

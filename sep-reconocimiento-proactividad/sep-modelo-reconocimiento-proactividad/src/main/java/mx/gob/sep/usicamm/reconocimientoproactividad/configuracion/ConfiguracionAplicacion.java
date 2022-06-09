@@ -12,9 +12,6 @@ public class ConfiguracionAplicacion {
     public ConfiguracionAplicacion(){
     }
     
-    @Value("${cfg.convocatoria.proceso}")
-    public int CVE_PROCESO;
-
     @Value("${cfg.convocatoria.niveleducativo}")
     public int CVE_NIVEL;
 
@@ -26,15 +23,6 @@ public class ConfiguracionAplicacion {
 
     @Value("${cfg.convocatoria.cicloescolar}")
     public int CVE_CICLO_ESCOLAR;
-
-    @Value("${cfg.sistemas.enlaces.clave}")
-    public int CVE_SISTEMA_ENLACES;
-
-    @Value("${cfg.convocatoria.folio.sufijo}")
-    public String FOLIO_SUFIJO;
-
-    @Value("${cfg.convocatoria.folio.ciclo}")
-    public String FOLIO_CICLO;
 
     @Value("${cfg.filesystems.logos}")
     public String RUTA_LOGOS;
@@ -66,5 +54,11 @@ public class ConfiguracionAplicacion {
     
     @Value("${cfg.reglas.negocio.participacion}")
     public int REGLA_PARTICIPACION;
+    
+    @Value("${cfg.reglas.negocio.datosPersonales}")
+    public int REGLA_DATOS_PERSONALES;
+    
+    @Value("${cfg.reglas.negocio.registro}")
+    public int REGLA_DATOS_REGISTRO;
     //Motor de Reglas
 }

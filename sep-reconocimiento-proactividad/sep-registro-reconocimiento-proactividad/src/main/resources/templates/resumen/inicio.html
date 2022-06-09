@@ -20,7 +20,6 @@
                         <div class="text-center">
                             <h3 class="texto_titulo_registro"
                                 th:text="${@environment.getProperty('app.menu.title.terminar')}"></h3>
-                            <img th:src="@{/img/Finalizado.png}" class="imagen_titulo_registro" />
                             <hr class="red hr-titulo">
                         </div>
                         <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 searching" ng-cloak="">
@@ -34,7 +33,6 @@
                     
                 <div th:replace="fragments/loading :: loading"/>
                 <div th:replace="fragments/footer :: footer"/>
-                <div th:replace="fragments/modal :: modal"/>
             </div>
         </main>
         <!-- JS APP -->

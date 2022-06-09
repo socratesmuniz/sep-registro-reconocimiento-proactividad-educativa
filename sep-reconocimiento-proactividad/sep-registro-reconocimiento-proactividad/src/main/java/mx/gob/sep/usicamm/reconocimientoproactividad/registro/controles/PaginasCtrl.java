@@ -54,11 +54,6 @@ public class PaginasCtrl {
         return ConstantesWeb.TEMPLATE_RESUMEN;
     }
 
-    @GetMapping("/datos-personales")
-    public String goDatosPersonales() {
-        return ConstantesWeb.TEMPLATE_DATOS_PERSONALES;
-    }
-
     @GetMapping("/registrado")
     public String goFinalizado() {
         return ConstantesWeb.TEMPLATE_FINALIZADO;
