@@ -24,8 +24,8 @@ public class UtilsPDF {
 private UtilsPDF(){
     }
     
-    public static void createHeader(PdfWriter writer, Document doc, String hash, String entidad, ConfiguracionAplicacion config){
-        HeaderFooterPDF event = new HeaderFooterPDF(hash, config, entidad);
+    public static void createHeader(PdfWriter writer, Document doc, String hash, ConfiguracionAplicacion config){
+        HeaderFooterPDF event = new HeaderFooterPDF(hash, config);
         writer.setBoxSize("header", new Rectangle(36, 54, 559, 750));
         writer.setPageEvent(event);
     }

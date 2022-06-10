@@ -54,7 +54,7 @@ public class PaginasCtrl {
         return ConstantesWeb.TEMPLATE_RESUMEN;
     }
 
-    @GetMapping("/registrado")
+    @GetMapping("/finalizado")
     public String goFinalizado() {
         return ConstantesWeb.TEMPLATE_FINALIZADO;
     }

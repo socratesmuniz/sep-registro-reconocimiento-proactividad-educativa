@@ -69,14 +69,16 @@ public class MapperUtil {
         dto.setNombreDocente(resultSet.getString("nombre"));
         dto.setPrimerApellidoDocente(resultSet.getString("primer_apellido"));
         dto.setSegundoApellidoDocente(resultSet.getString("segundo_apellido"));
-        dto.setCveEntidad(resultSet.getInt("cve_cat_entidad"));
+        dto.setCveEntidad(resultSet.getInt("cve_cat_entidad_federativa"));
         dto.setEntidad(resultSet.getString("entidad"));
+        dto.setAnioAplicacion(resultSet.getInt("anio_aplicacion"));
         dto.setCveSostenimiento(resultSet.getInt("cve_cat_tipo_sostenimiento"));
         dto.setSostenimiento(resultSet.getString("sostenimiento"));
         dto.setCveServicioEducativo(resultSet.getInt("cve_cat_servicio_educativo"));
         dto.setServicioEducativo(resultSet.getString("servicio_educativo"));
         dto.setCveModalidad(resultSet.getInt("cve_cat_modalidad"));
-        dto.setHuella(resultSet.getString("huella"));
+        dto.setCveCct(resultSet.getString("cve_cat_cct"));
+        dto.setCct(resultSet.getString("cct"));
         dto.setFechaRegistro(resultSet.getTimestamp("fecha_registro"));
                 
         return dto;

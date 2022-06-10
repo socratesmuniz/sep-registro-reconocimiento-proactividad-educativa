@@ -1,8 +1,6 @@
 package mx.gob.sep.usicamm.reconocimientoproactividad.pruebas;
 
 import java.io.FileOutputStream;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import mx.gob.sep.usicamm.reconocimientoproactividad.negocio.documentos.FichaRegistro;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +24,6 @@ public class PruebaFichas {
     public void generaFichaRegistro() throws Exception {
         FileOutputStream out=new FileOutputStream("ficha.pdf");
 
-        fichaRegistro.generaFicha(out, "Durango", "AAAA790609MCHNRL06");
+        fichaRegistro.generaFicha(out, "AAAA771121MMCLNR06", 7, 2020);
     }
 }

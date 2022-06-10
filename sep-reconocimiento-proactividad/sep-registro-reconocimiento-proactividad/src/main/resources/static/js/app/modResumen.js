@@ -1,26 +1,52 @@
 angular.module('modResumen', ['ngSanitize', 'ngRoute'])
     .constant('RUTAS', {
         URL_PARTICIPACION: './participacion',
-        URL_REGISTRO: './registro'
+        URL_REGISTRO: './finalizado'
     })
     .constant('API',
         (function (){
             const API_URL='./api/';
             return {
                 //catalogos
-                API_GET_DOCENTE: API_URL + 'docentes/get-curp/'
+                API_GET_DOCENTE: API_URL + 'docentes/get-curp/',
                 //datos de operacion
+                API_REGISTRO: API_URL + 'participaciones/add/'
             };
         })()
     )
     .run(function ($rootScope, $sce, $http){
         $http.defaults.headers.common.Authorization=sessionStorage.getItem('token');
+
+        $rootScope.disclaimerModal=function (modal, msg1, msg2, acceptFunction, cancelFunction){
+            $rootScope.loading=false;
+            msg1 || (msg1="");
+            msg2 || (msg2="");
+
+            modal.visible=true;
+            modal.botonOkText="Finalizar registro";
+            modal.modalMsgNote="*No olvide imprimir o guardar la contancia una vez finalizado el proceso.";
+            modal.modalMsg1=msg1;
+            modal.modalMsg2=$sce.trustAsHtml(msg2);
+            modal.clase="animated bounceInLeft";
+            modal.funcionModalAceptar=acceptFunction;
+            modal.funcionModalCancelar=cancelFunction;                
+        };
+
+        $rootScope.closeDisclaimerModal=function (modal) {
+            modal.clase="animated bounceOutRight";
+            setTimeout(function () {
+                modal.visible=false;
+                $rootScope.$apply();
+            }, 600);
+        };
     })
-    .controller('ctrlResumen', ['$rootScope', '$scope', '$sce', '$rootScope', 'API', 'RUTAS', '$http', function ($rootScope, $scope, $sce, $rootScope, API, RUTAS, $http){
+    .controller('ctrlResumen', ['$rootScope', '$scope', '$sce', 'API', 'RUTAS', '$http', function ($rootScope, $scope, $sce, API, RUTAS, $http){
         // --- constantes ---
         const MODULO_REGISTRO='RG';
         
         // --- variables ---
+        $rootScope.mDisclaimer={visible: false};
+        $scope.mAcepto="";        
         //datos de formulario
         $scope.data={};
         $scope.data.datosDocente={};
@@ -43,8 +69,6 @@ angular.module('modResumen', ['ngSanitize', 'ngRoute'])
             },
 
             showMsg: function (code, msg){
-                $scope.cargando=true;                
-                
                 if (code===COD_OK){
                     this.isSuccess=true;
                 } else {
@@ -125,16 +149,73 @@ angular.module('modResumen', ['ngSanitize', 'ngRoute'])
             let request={
                 cveDocente: $scope.mainData.cveDocente,
                 curp: $scope.mainData.curp,
-                cveEntidad: $scope.mainData.cveEntidad
+                cveEntidad: $scope.mainData.cveEntidad,
+                anioAplicacion: $scope.mainData.cveAnioAplicacion,
+                nombreTrabajo: $scope.mainData.nombreTrabajo,
+                cveSostenimiento: $scope.mainData.cveSostenimiento,
+                cveServicioEducativo: $scope.mainData.cveServicio,
+                cveModalidad: $scope.mainData.cveModalidad,
+                cveCct: $scope.mainData.cveCct
             };
             
             $scope.data.errores=[];
-            validaRegla($scope, $http, responseError, $scope.mainData.cveDocente, MODULO_REGISTRO, request, $scope.guardaDatos);
+            validaRegla($scope, $http, responseError, $scope.mainData.cveDocente, MODULO_REGISTRO, request, $scope.finalizar);
         };
         
-        $scope.guardaDatos=function(){
+        $scope.finalizar=function(){
+            $scope.cargando=false;
+            var accept=function () {
+                $scope.cargando=true;
+                
+                $scope.guardaDatos();
+                $rootScope.closeDisclaimerModal($rootScope.mDisclaimer);
+            };
+
+            var cancel=function () {
+                $rootScope.closeDisclaimerModal($rootScope.mDisclaimer);
+            };
+
+            $scope.messageAPI.clean();
+            $rootScope.disclaimerModal($rootScope.mDisclaimer,
+                    "Esta a punto de finalizar su registro.",
+                    "Si está de acuerdo, escriba la palabra ACEPTO",
+                    accept,
+                    cancel);
             
-//            location.href=RUTAS.URL_REGISTRO;
+        };
+
+        $scope.guardaDatos=function(){
+            $scope.cargando=true;
+            let request={
+                cveDocente: $scope.mainData.cveDocente,
+                cveEntidad: $scope.mainData.cveEntidad,
+                anioAplicacion: $scope.mainData.cveAnioAplicacion,
+                nombreTrabajo: $scope.mainData.nombreTrabajo,
+                cveSostenimiento: $scope.mainData.cveSostenimiento,
+                cveServicioEducativo: $scope.mainData.cveServicio,
+                cveModalidad: $scope.mainData.cveModalidad,
+                cveCct: $scope.mainData.cveCct
+            };
+                        
+            $http.post(API.API_REGISTRO+$scope.mainData.cveDocente, request).then(function(response){
+                $scope.cargando=false;
+                if (response.data.code === COD_OK){
+                    sessionStorage.removeItem('nombreEntidad');
+                    sessionStorage.removeItem('nombreTrabajo');
+                    sessionStorage.removeItem('cveSostenimiento');
+                    sessionStorage.removeItem('nombreSostenimiento');
+                    sessionStorage.removeItem('cveServicio');
+                    sessionStorage.removeItem('cveModalidad');
+                    sessionStorage.removeItem('nombreServicio');
+                    sessionStorage.removeItem('cveCct');
+                    sessionStorage.removeItem('nombreCct');
+                    
+                    location.href=RUTAS.URL_REGISTRO;
+                } 
+                else {
+                    $scope.messageAPI.showMsg(response.data.code, response.data.msg);
+                }
+            }, responseError);
         };
 
 

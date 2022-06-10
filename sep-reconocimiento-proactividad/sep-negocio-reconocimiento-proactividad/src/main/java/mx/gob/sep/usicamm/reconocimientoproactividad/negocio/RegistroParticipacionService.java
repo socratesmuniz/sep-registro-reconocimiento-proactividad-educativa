@@ -2,7 +2,6 @@ package mx.gob.sep.usicamm.reconocimientoproactividad.negocio;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import mx.gob.sep.usicamm.reconocimientoproactividad.accesodatos.RegistroParticipacionDAO;
 import mx.gob.sep.usicamm.reconocimientoproactividad.configuracion.ConfiguracionAplicacion;
@@ -33,31 +32,46 @@ public class RegistroParticipacionService {
         this.registroParticipacionDAO=registroParticipacionDAO;
     }
 
-    public boolean actualizaParticipacion(Integer usuario, ParticipacionDTO datos) throws AccesoDatosExcepcion, NegocioExcepcion, OperacionInvalidaBdException{
-        List<ParticipacionDTO> pars;
+    public boolean actualizaParticipacion(ParticipacionDTO datos) throws AccesoDatosExcepcion, NegocioExcepcion, OperacionInvalidaBdException{
         boolean exito=true;
         
         try {
-            exito=exito & this.registroParticipacionDAO.insertParticipacion(datos, usuario);
+            //valida que no tenga una participacion
+            ParticipacionDTO rTmp = this.registroParticipacionDAO.selectParticipacion(datos.getCveDocente(), datos.getCveEntidad(), datos.getAnioAplicacion());
+            if(rTmp!=null){
+                throw new NegocioExcepcion("El participante ya tiene una participación registrada");
+            }
+            
+            exito=exito|this.registroParticipacionDAO.insertParticipacion(datos);
+            if(exito){
+                exito=exito|this.registroParticipacionDAO.insertDetalleTrabajo(datos);
+            }
             
             return exito;
         } 
         catch (CannotGetJdbcConnectionException e){
             log.error(Constantes.BD_EXCEPTION_JDBC, e);
+            this.eliminaParticipacion(datos);
             throw new AccesoDatosExcepcion(e);
         } 
         catch (BadSqlGrammarException | UncategorizedSQLException e){
             log.error(Constantes.BD_EXCEPTION_SQL, e);
+            this.eliminaParticipacion(datos);
             throw new OperacionInvalidaBdException(e);
         }
     }
 
-    public ParticipacionDTO recuperaParticipacion(Integer cveDocente) throws AccesoDatosExcepcion, OperacionInvalidaBdException{
+    public ParticipacionDTO recuperaParticipacion(Integer cveDocente, Integer cveEntidad, Integer anioAplicacion) throws AccesoDatosExcepcion, OperacionInvalidaBdException{
+        ParticipacionDTO par;
         try {
-            ParticipacionDTO par = this.registroParticipacionDAO.selectParticipacion(cveDocente);
+            //valida que no tenga una participacion
+            par=this.registroParticipacionDAO.selectParticipacion(cveDocente, cveEntidad, anioAplicacion);
+            if(par!=null){
+                par.setNombreTrabajo(this.registroParticipacionDAO.selectDetalleTrabajo(cveDocente, cveEntidad, anioAplicacion));
+            }
             
             return par;
-        }
+        } 
         catch (CannotGetJdbcConnectionException e){
             log.error(Constantes.BD_EXCEPTION_JDBC, e);
             throw new AccesoDatosExcepcion(e);
@@ -67,22 +81,34 @@ public class RegistroParticipacionService {
             throw new OperacionInvalidaBdException(e);
         }
     }
-    
-    
-    
-    
-    private String generaHuella(int docente, int entidad){
+                
+    public String generaHuella(ParticipacionDTO participacion){
         StringBuilder sb=new StringBuilder("");
-        ParticipacionDTO pTO=this.registroParticipacionDAO.selectParticipacion(docente);
         
-        sb.append("docente:").append(pTO.getCveDocente()).append("|")
-                .append("entidad:").append(pTO.getCveEntidad()).append("|")
-                .append("sostenimiento:").append(pTO.getCveSostenimiento()).append("|")
-                .append("servicioEducativo:").append(pTO.getCveServicioEducativo()).append("|");
+        sb.append("docente:").append(participacion.getCveDocente()).append("|")
+                .append("entidad:").append(participacion.getCveEntidad()).append("|")
+                .append("añoParticipacion:").append(participacion.getAnioAplicacion()).append("|")
+                .append("nombreTrabajo:").append(participacion.getNombreTrabajo()).append("|")
+                .append("sostenimiento:").append(participacion.getCveSostenimiento()).append("|")
+                .append("servicioEducativo:").append(participacion.getCveServicioEducativo()).append("|")
+                .append("modalidad:").append(participacion.getCveModalidad()).append("|")
+                .append("cct:").append(participacion.getCveCct()).append("|");
         
         log.info("Cadena original: "+sb.toString());
         
         return cifraHuella(sb.toString());
+    }
+    
+    
+    
+
+    public void eliminaParticipacion(ParticipacionDTO datos) throws AccesoDatosExcepcion, OperacionInvalidaBdException{
+        try {
+            this.registroParticipacionDAO.deleteParticipacion(datos);
+        } 
+        catch (Exception e){
+            log.error(Constantes.BD_EXCEPTION_JDBC, e);
+        }
     }
     
     /**

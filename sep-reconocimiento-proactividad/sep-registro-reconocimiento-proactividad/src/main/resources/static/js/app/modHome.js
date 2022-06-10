@@ -58,6 +58,13 @@ angular.module('homeModule', ['ngSanitize', 'ngRoute'])
             showContinuar: false
         };
 
+        $scope.avanceFormulario={
+            datosPersonales: false,
+            participacion: false,
+            resumen: false,
+            registrado: false
+        };
+
 
         //funciones
         let responseError = function (reason) {
@@ -67,6 +74,9 @@ angular.module('homeModule', ['ngSanitize', 'ngRoute'])
         };
 
         $scope.initValues=function (curp, cveDocente, token, tokenOriginal, url) {
+            sessionStorage.removeItem('cveEntidad');
+            sessionStorage.removeItem('cveAnioAplicacion');
+
             console.log("URL: "+url);
             $scope.mainData.urlDatosPersonales=url;
             if(curp!==null && curp!=='' && curp!=='null' && curp!==undefined){

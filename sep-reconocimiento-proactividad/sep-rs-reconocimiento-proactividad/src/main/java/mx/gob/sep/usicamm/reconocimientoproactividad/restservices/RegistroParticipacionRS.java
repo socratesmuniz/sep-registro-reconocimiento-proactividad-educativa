@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -39,10 +40,11 @@ public class RegistroParticipacionRS {
     
     @LogRESTTime
     @GetMapping(value="participaciones/get/{docente}")
-    public ResponseEntity<?> getParticipacion(@PathVariable Integer docente){
+    public ResponseEntity<?> getParticipacion(@PathVariable Integer docente, @RequestParam(defaultValue="0") Integer cveEntidad,
+            @RequestParam(defaultValue="0") Integer anioParticipacion){
         return RespuestaRestParser.parse(new Callable<Object>() {
             public Object call() throws AccesoDatosExcepcion, OperacionInvalidaBdException {
-                return service.recuperaParticipacion(docente);
+                return service.recuperaParticipacion(docente, cveEntidad, anioParticipacion);
             }
          }, null);
     }
@@ -53,7 +55,7 @@ public class RegistroParticipacionRS {
         if (this.controlAcceso.validaTokenSistema(token, cveDocenteLogin)){
             return RespuestaRestParser.parse(new Callable<Object>() {
                 public Object call() throws AccesoDatosExcepcion, OperacionInvalidaBdException, NegocioExcepcion {
-                    return service.actualizaParticipacion(cveDocenteLogin, datos);
+                    return service.actualizaParticipacion(datos);
                 }
              }, Constantes.MSG_PARTICIPACION_UPT_OK);
         }

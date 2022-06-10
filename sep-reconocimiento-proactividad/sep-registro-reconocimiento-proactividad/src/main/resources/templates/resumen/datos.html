@@ -1,11 +1,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <body>
-        <div th:fragment="datos" class="col-md-12 contenedor_formulario">
+        <div th:fragment="datos" class="col-md-12">
             <div class="text-justify">
                 <p>Por favor revise los datos y de clic en Finalizar.</p>
             </div>
             
-            <div class="form-group span-3-column">
+            <div class="col-md-8 col-md-offset-2">
                 <div ng-show="messageAPI.show">
                     <div ng-class="{'alert alert-success': messageAPI.isSuccess, 'alert alert-danger': messageAPI.isError}">
                         <strong>¡Información!: </strong>
@@ -14,7 +14,7 @@
                 </div>
             </div>
             
-            <div class="form-group span-3-column">
+            <div class="row col-md-12">
                 <h3 class="red salto" th:text="${@environment.getProperty('app.menu.title.datospersonales')}"></h3>
                 <div>
                     <strong>CURP: </strong>
@@ -49,9 +49,9 @@
                     <span ng-bind-html="formateaValor(data.datosDocente.correo2)"></span>
                 </div>
             </div>
-            <hr style="height: 5px; background-color: darkred;"/>
+            <hr class="row col-md-12" style="height: 5px; background-color: darkred;"/>
             
-            <div class="form-group span-3-column">
+            <div class="row col-md-12">
                 <h3 class="red salto" th:text="${@environment.getProperty('app.menu.title.participacion')}"></h3>
                 <div>
                     <strong>Entidad federativa donde labora: </strong>
@@ -78,16 +78,16 @@
                     <span ng-bind-html="(mainData.cveCct)"></span>
                 </div>
             </div>
-            <hr style="height: 5px; background-color: darkred;"/>
+            <hr class="row col-md-12" style="height: 5px; background-color: darkred;"/>
 
-            <div class="form-group span-3-column">
+            <div class="row col-md-12">
                 <div class="text-center">
                     <input type="button" ng-disabled="!container.showContinuar" value="Finalizar"
                             class="btn btn-primary" ng-click="validaDatos()" />
                 </div>
             </div>
             
-            <div class="form-group span-3-column">
+            <div class="row col-md-8 col-md-offset-2">
                 <div ng-show="messageAPI.show">
                     <div ng-class="{'alert alert-success': messageAPI.isSuccess, 'alert alert-danger': messageAPI.isError}">
                         <strong>¡Información!: </strong>
@@ -96,7 +96,7 @@
                 </div>
             </div>
 
-            <div class="form-group span-3-column">
+            <div class="col-md-8 col-md-offset-2">
                 <div class="alert alert-danger"  ng-show="data.errores.length>0">
                     <strong>¡Se presentaron problemas con los datos!: </strong>
                     <br />
@@ -106,7 +106,7 @@
                 </div>
             </div>
 
-            <div class="form-group span-3-column">
+            <div class="row col-md-12">
                 <table border="0" width="100%">
                     <tr>
                         <td width="50%">

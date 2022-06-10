@@ -21,25 +21,24 @@ public class RegistroParticipacionDAO extends BaseDAO{
     }
 
     @LogExecutionTime
-    public ParticipacionDTO selectParticipacion(Integer cveDocente){
+    public ParticipacionDTO selectParticipacion(int docente, int entidad, int anioAplicacion){
         return jdbcTemplate.query(SQL.SQL_SEL_REGISTRO_PARTICIPACION,
-                new Object[]{config.CVE_SISTEMA, config.CVE_NIVEL, config.CVE_CICLO_ESCOLAR, cveDocente},
-                new int[]{Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.INTEGER}, 
+                new Object[]{this.config.CVE_SISTEMA, this.config.CVE_NIVEL, docente, entidad, anioAplicacion},
+                new int[]{Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.INTEGER}, 
                 MapperUtil::mapRowParticipacion).stream().findFirst().orElse(null);
     }
 
     @LogExecutionTime
-    public boolean insertParticipacion(ParticipacionDTO participacion, Integer usuario) {
+    public boolean insertParticipacion(ParticipacionDTO participacion) {
         return jdbcTemplate.update(SQL.SQL_INS_REGISTRO_PARTICIPACION,
                 config.CVE_NIVEL,
-                config.CVE_CICLO_ESCOLAR,
                 participacion.getCveDocente(),
                 participacion.getCveEntidad(),
+                participacion.getAnioAplicacion(),
                 participacion.getCveSostenimiento(),
                 participacion.getCveServicioEducativo(),
                 participacion.getCveModalidad(),
-                participacion.getCveCct(),
-                usuario
+                participacion.getCveCct()
                 ) > 0;
     }
 
@@ -51,9 +50,9 @@ public class RegistroParticipacionDAO extends BaseDAO{
                 participacion.getCveModalidad(),
                 participacion.getCveCct(),
                 config.CVE_NIVEL,
-                config.CVE_CICLO_ESCOLAR,
                 participacion.getCveDocente(),
-                participacion.getCveEntidad()
+                participacion.getCveEntidad(),
+                participacion.getAnioAplicacion()
                 ) > 0;
     }
 
@@ -61,23 +60,53 @@ public class RegistroParticipacionDAO extends BaseDAO{
     public boolean deleteParticipacion(ParticipacionDTO participacion) {
         return jdbcTemplate.update(SQL.SQL_DEL_REGISTRO_PARTICIPACION,
                 config.CVE_NIVEL,
-                config.CVE_CICLO_ESCOLAR,
                 participacion.getCveDocente(),
-                participacion.getCveEntidad()
+                participacion.getCveEntidad(),
+                participacion.getAnioAplicacion()
                 ) > 0;
     }
 
     @LogExecutionTime
-    public boolean agregaBitacora(int evento, Integer cveDocente, Integer cveDocenteModificador, Integer cveEntidad){
+    public boolean agregaBitacora(int evento, int docente, int entidad, int anioParticipacion){
         return (this.jdbcTemplate.update(SQL.SQL_BIT_REGISTRO_PARTICIPACION,
                 this.config.CVE_SISTEMA, 
                 evento,
-                cveDocente,
-                cveDocenteModificador,
+                docente,
+                docente,
                 this.config.CVE_NIVEL,
-                this.config.CVE_CICLO_ESCOLAR,
-                cveDocente,
-                cveEntidad
+                docente,
+                entidad,
+                anioParticipacion
         ) >0);
+    }
+
+    @LogExecutionTime
+    public String selectDetalleTrabajo(int docente, int entidad, int anioAplicacion){
+        return jdbcTemplate.query(SQL.SQL_SEL_REGISTRO_TRABAJO,
+                new Object[]{this.config.CVE_NIVEL, docente, entidad, anioAplicacion},
+                new int[]{Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.INTEGER}, 
+                MapperUtil::mapRowString).stream().findFirst().orElse(null);
+    }
+
+    @LogExecutionTime
+    public boolean insertDetalleTrabajo(ParticipacionDTO participacion) {
+        return jdbcTemplate.update(SQL.SQL_INS_REGISTRO_TRABAJO,
+                config.CVE_NIVEL,
+                participacion.getCveDocente(),
+                participacion.getCveEntidad(),
+                participacion.getAnioAplicacion(),
+                participacion.getNombreTrabajo()
+                ) > 0;
+    }
+
+    @LogExecutionTime
+    public boolean updateDetalleTrabajo(ParticipacionDTO participacion) {
+        return jdbcTemplate.update(SQL.SQL_UPD_REGISTRO_TRABAJO,
+                participacion.getNombreTrabajo(),
+                config.CVE_NIVEL,
+                participacion.getCveDocente(),
+                participacion.getCveEntidad(),
+                participacion.getAnioAplicacion()
+                ) > 0;
     }
 }
