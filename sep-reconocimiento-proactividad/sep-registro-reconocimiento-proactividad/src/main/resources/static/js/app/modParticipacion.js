@@ -1,4 +1,4 @@
-angular.module('modParticipacion', ['ngSanitize', 'ngRoute'])
+angular.module('modParticipacion', ['ngSanitize', 'ngRoute', 'naif.base64'])
     .constant('RUTAS', {
         URL_RESUMEN: './resumen'
     })
@@ -25,6 +25,7 @@ angular.module('modParticipacion', ['ngSanitize', 'ngRoute'])
         // --- variables ---
         //datos de formulario
         $scope.data={};
+        $scope.data.archivoResumen=null;
         //datos de sesion
         $scope.mainData={};
         $scope.cargando=false;
@@ -229,7 +230,7 @@ angular.module('modParticipacion', ['ngSanitize', 'ngRoute'])
             if(sessionStorage.getItem("cveCct")!==null){
                 $scope.data.cveCct=sessionStorage.getItem("cveCct");
                 $scope.getCct($scope.data.cveCct);
-                $scope.participacionForm.$setDirty();
+                //$scope.participacionForm.$setDirty();
             }
         };
         
@@ -245,6 +246,8 @@ angular.module('modParticipacion', ['ngSanitize', 'ngRoute'])
             sessionStorage.setItem('nombreServicio', getDescripcionElemento($scope.servicios, $scope.data.cveServicio));
             sessionStorage.setItem('cveCct', $scope.data.cveCct);
             sessionStorage.setItem('nombreCct', $scope.data.cct.nombre);
+            sessionStorage.setItem('nombreArchivo', $scope.data.archivoResumen.filename);
+            sessionStorage.setItem('contenidoArchivo', $scope.data.archivoResumen.base64);
             
             location.href=RUTAS.URL_RESUMEN;
         };
@@ -265,5 +268,11 @@ angular.module('modParticipacion', ['ngSanitize', 'ngRoute'])
             }
             
             return null;
+        };
+        
+        $scope.tamanioFormateado=function(){
+            let tam=$scope.data.archivoResumen.filesize/1024/1024;
+            
+            return tam.toFixed(2);
         };
     }]);

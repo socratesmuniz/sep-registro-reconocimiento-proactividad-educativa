@@ -51,7 +51,28 @@
                     </label>
                     <textarea class="form-control" id="nombreTrabajo" name="nombreTrabajo" required ng-model="data.nombreTrabajo"
                             ng-style="{'border':(participacionForm.nombreTrabajo.$touched && participacionForm.nombreTrabajo.$invalid? '2px solid red': '1px solid silver')}" 
-                            rows="6" maxlength="500" placeholder="Máximo 500 carácteres"></textarea>
+                            rows="3" maxlength="500" placeholder="Máximo 500 carácteres"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="archivoResumen">
+                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Resumen de la práctica educativa
+                    </label>
+                    <input class="form-control" type="file" ng-model="data.archivoResumen" name="archivoResumen" base-sixty-four-input required 
+                           ng-style="{'border':(participacionForm.archivoResumen.$touched && participacionForm.archivoResumen.$invalid? '2px solid red': '1px solid silver')}" 
+                            onload="cargaArchivoResumen" maxsize="1024" accept="application/pdf" />
+                    <div style="font-size:12px;">
+                        &nbsp;<br />
+                        <ul>
+                            <li>
+                                <span style="color:darkcyan" ng-show="data.archivoResumen!==null">Tamaño detectado = {{tamanioFormateado()}} Mb </span>
+                                <span style="color:silver">Tamaño máximo = 1 Mb</span>
+                            </li>
+                            <li>
+                                <span style="color:darkcyan" ng-show="data.archivoResumen!==null">Tipo detectado = {{data.archivoResumen.filetype}} </span>
+                                <span style="color:silver">Tipo permitido = PDF</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="cveSostenimiento">
@@ -82,49 +103,49 @@
                             ng-style="{'border':(participacionForm.cveCct.$touched && participacionForm.cveCct.$invalid? '2px solid red': '1px solid silver')}" 
                             />
                 </div>
-                <div class="form-group">
+                <div class="col-md-9">
                     <label class="control-label" for="nombreCct">
                         Nombre del CCT
                     </label>
                     <br />
                     <input class="form-control" id="nombreCct" name="nombreCct" ng-model="data.cct.nombre" readonly />
                 </div>
-                <div class="form-group">
-                    <label class="control-label" for="direccionCct">
-                        Dirección del CCT
-                    </label>
-                    <br />
-                    <input class="form-control" id="direccionCct" name="direccionCct" ng-model="data.cct.direccion" readonly />
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="municipioCct">
-                        Municipio del CCT
-                    </label>
-                    <br />
-                    <input class="form-control" id="municipioCct" name="municipioCct" ng-model="data.cct.municipio" readonly />
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="localidadCct">
-                        Localidad del CCT
-                    </label>
-                    <br />
-                    <input class="form-control" id="localidadCct" name="localidadCct" ng-model="data.cct.localidad" readonly />
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="numeroExteriorCct">
-                        Número exterior del CCT
-                    </label>
-                    <br />
-                    <input class="form-control" id="numeroExteriorCct" name="numeroExteriorCct" ng-model="data.cct.numeroExterior" readonly />
-                </div>
-                <div class="form-group">
+                <div class="col-md-3">
                     <label class="control-label" for="telefonoCct">
                         Teléfono del CCT
                     </label>
                     <br />
                     <input class="form-control" id="telefonoCct" name="telefonoCct" ng-model="data.cct.telefono" readonly />
                 </div>
-                <div class="form-group">
+                <div class="col-md-6">
+                    <label class="control-label" for="direccionCct">
+                        Dirección del CCT
+                    </label>
+                    <br />
+                    <input class="form-control" id="direccionCct" name="direccionCct" ng-model="data.cct.direccion" readonly />
+                </div>
+                <div class="col-md-3">
+                    <label class="control-label" for="municipioCct">
+                        Municipio del CCT
+                    </label>
+                    <br />
+                    <input class="form-control" id="municipioCct" name="municipioCct" ng-model="data.cct.municipio" readonly />
+                </div>
+                <div class="col-md-3">
+                    <label class="control-label" for="localidadCct">
+                        Localidad del CCT
+                    </label>
+                    <br />
+                    <input class="form-control" id="localidadCct" name="localidadCct" ng-model="data.cct.localidad" readonly />
+                </div>
+                <div class="col-md-3">
+                    <label class="control-label" for="numeroExteriorCct">
+                        Número exterior del CCT
+                    </label>
+                    <br />
+                    <input class="form-control" id="numeroExteriorCct" name="numeroExteriorCct" ng-model="data.cct.numeroExterior" readonly />
+                </div>
+                <div class="col-md-3">
                     <label class="control-label" for="tipoEducativoCct">
                         Tipo educativo del CCT
                     </label>
@@ -132,15 +153,17 @@
                     <input class="form-control" id="tipoEducativoCct" name="tipoEducativoCct" ng-model="data.cct.tipo" readonly />
                 </div>
 
-                <div class="form-group span-3-column">
+                <div class="row col-md-12">
+                    <br />
                     <div class="text-center">
                         <input type="button" ng-disabled="participacionForm.$invalid || !container.showContinuar" value="Continuar"
                                 class="btn btn-primary" ng-click="validaDatos()" />
                     </div>
+                    <br />
                 </div>
             </form>
             
-            <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
+            <div class="col-sm-6 col-sm-offset-3">
                 <div ng-show="messageAPI.show">
                     <div ng-class="{'alert alert-success': messageAPI.isSuccess, 'alert alert-danger': messageAPI.isError}">
                         <strong>¡Información!: </strong>

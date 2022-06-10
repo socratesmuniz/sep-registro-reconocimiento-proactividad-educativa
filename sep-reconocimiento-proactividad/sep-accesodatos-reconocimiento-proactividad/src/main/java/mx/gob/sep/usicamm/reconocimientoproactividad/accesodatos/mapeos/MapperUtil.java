@@ -79,8 +79,19 @@ public class MapperUtil {
         dto.setCveModalidad(resultSet.getInt("cve_cat_modalidad"));
         dto.setCveCct(resultSet.getString("cve_cat_cct"));
         dto.setCct(resultSet.getString("cct"));
+        dto.setHuella(resultSet.getString("huella"));
         dto.setFechaRegistro(resultSet.getTimestamp("fecha_registro"));
                 
+        return dto;
+    }
+
+    public static ArchivoDTO mapRowArchivo(ResultSet resultSet, int rowNum) throws SQLException {
+        ArchivoDTO dto=new ArchivoDTO();
+        
+        dto.setMimeType("application/pdf");
+        dto.setNombreInterno(resultSet.getString("nombre_interno"));
+        dto.setNombreOriginal(resultSet.getString("nombre_archivo"));
+        
         return dto;
     }
 }

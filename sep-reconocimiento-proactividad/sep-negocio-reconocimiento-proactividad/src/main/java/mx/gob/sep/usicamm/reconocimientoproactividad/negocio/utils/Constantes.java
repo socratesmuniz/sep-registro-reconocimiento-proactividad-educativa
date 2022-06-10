@@ -45,6 +45,7 @@ public enum Constantes {
     public static final String MD5_ALGORITHM="MD5";
 
     //Mensajes de BD
+    public static final String FILE_EXCEPTION="Incidencia FILE: {}";
     public static final String BD_EXCEPTION_JDBC="Incidencia JDBC: {}";
     public static final String BD_EXCEPTION_SQL="Incidencia SQL: {}";
     public static final String BD_START_OPERATION="INICIA OPER BD";

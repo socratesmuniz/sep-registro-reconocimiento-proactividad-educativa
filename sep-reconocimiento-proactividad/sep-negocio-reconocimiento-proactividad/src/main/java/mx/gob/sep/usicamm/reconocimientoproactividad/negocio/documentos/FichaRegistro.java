@@ -13,7 +13,6 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import lombok.extern.slf4j.Slf4j;
 import mx.gob.sep.usicamm.reconocimientoproactividad.configuracion.ConfiguracionAplicacion;
 import mx.gob.sep.usicamm.reconocimientoproactividad.entidades.DocenteDTO;
@@ -58,7 +57,7 @@ public class FichaRegistro {
         }
 
         PdfWriter writer = PdfWriter.getInstance(document, flujo);        
-        UtilsPDF.createHeader(writer, document, this.participacionService.generaHuella(datosParticipacion), this.config);
+        UtilsPDF.createHeader(writer, document, datosParticipacion.getHuella(), this.config);
         document.open();
         
         this.generaDatosFicha(document, datosDocente, datosParticipacion);
@@ -72,8 +71,6 @@ public class FichaRegistro {
         PdfPTable tabla;
         Paragraph pTmp;
         PdfPCell cell;
-        SimpleDateFormat sdf=new SimpleDateFormat("HH:mm:ss");
-        String anios="";
         
         //imagenes
         Image img1=Image.getInstance(HeaderFooterPDF.class.getResource("./personaRegistro1.png"));
@@ -82,9 +79,6 @@ public class FichaRegistro {
         img1=Image.getInstance(HeaderFooterPDF.class.getResource("./personaRegistro2.png"));
         img1.scalePercent(60f);
         doc.add(new Chunk(img1, -120, -365));
-        /*img1=Image.getInstance(HeaderFooterPDF.class.getResource("./personaRegistro3.png"));
-        img1.scalePercent(60f);
-        doc.add(new Chunk(img1, -200, -620));*/
         
         doc.add(UtilsPDF.generaLineaTitulo());        
         pTmp=new Paragraph(UtilsPDF.generaTextoTitulo("Comprobante de participación"));

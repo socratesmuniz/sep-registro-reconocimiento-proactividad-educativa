@@ -117,7 +117,10 @@ angular.module('modResumen', ['ngSanitize', 'ngRoute'])
             $scope.mainData.nombreServicio=sessionStorage.getItem('nombreServicio');
             $scope.mainData.cveCct=sessionStorage.getItem('cveCct');
             $scope.mainData.nombreCct=sessionStorage.getItem('nombreCct');
+            $scope.mainData.nombreArchivo=sessionStorage.getItem('nombreArchivo');
+            $scope.mainData.contenidoArchivo=sessionStorage.getItem('contenidoArchivo');
             console.log("Entidad: "+$scope.mainData.nombreEntidad);
+            console.log("Archivo: "+$scope.mainData.nombreArchivo+"   "+$scope.mainData.contenidoArchivo);
             
             $scope.getDatosDocente();
         };
@@ -155,7 +158,8 @@ angular.module('modResumen', ['ngSanitize', 'ngRoute'])
                 cveSostenimiento: $scope.mainData.cveSostenimiento,
                 cveServicioEducativo: $scope.mainData.cveServicio,
                 cveModalidad: $scope.mainData.cveModalidad,
-                cveCct: $scope.mainData.cveCct
+                cveCct: $scope.mainData.cveCct,
+                nombreArchivo: $scope.mainData.nombreArchivo
             };
             
             $scope.data.errores=[];
@@ -188,13 +192,18 @@ angular.module('modResumen', ['ngSanitize', 'ngRoute'])
             $scope.cargando=true;
             let request={
                 cveDocente: $scope.mainData.cveDocente,
+                curpDocente: $scope.mainData.curp,
                 cveEntidad: $scope.mainData.cveEntidad,
                 anioAplicacion: $scope.mainData.cveAnioAplicacion,
                 nombreTrabajo: $scope.mainData.nombreTrabajo,
                 cveSostenimiento: $scope.mainData.cveSostenimiento,
                 cveServicioEducativo: $scope.mainData.cveServicio,
                 cveModalidad: $scope.mainData.cveModalidad,
-                cveCct: $scope.mainData.cveCct
+                cveCct: $scope.mainData.cveCct,
+                archivos: [{
+                    nombreOriginal: $scope.mainData.nombreArchivo,
+                    contenidoBase64: $scope.mainData.contenidoArchivo
+                }]
             };
                         
             $http.post(API.API_REGISTRO+$scope.mainData.cveDocente, request).then(function(response){
@@ -209,6 +218,8 @@ angular.module('modResumen', ['ngSanitize', 'ngRoute'])
                     sessionStorage.removeItem('nombreServicio');
                     sessionStorage.removeItem('cveCct');
                     sessionStorage.removeItem('nombreCct');
+                    sessionStorage.removeItem('nombreArchivo');
+                    sessionStorage.removeItem('contenidoArchivo');
                     
                     location.href=RUTAS.URL_REGISTRO;
                 } 

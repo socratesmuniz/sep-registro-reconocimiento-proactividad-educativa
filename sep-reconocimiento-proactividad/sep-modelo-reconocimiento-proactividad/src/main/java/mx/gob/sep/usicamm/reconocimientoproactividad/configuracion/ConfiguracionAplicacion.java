@@ -39,6 +39,10 @@ public class ConfiguracionAplicacion {
     @Value("${cfg.documentos.marca-agua.texto}")
     public String TEXTO_MARCA_AGUA;
 
+    @Value("${cfg.documentos.ruta.local}")
+    public String RUTA_ARCHIVOS;
+
+    
     //Motor de Reglas
     @Value("${app.reglas.negocio.servicio}")
     public String REGLAS_NEGOCIO_URL;

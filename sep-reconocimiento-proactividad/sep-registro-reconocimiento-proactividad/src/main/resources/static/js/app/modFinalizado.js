@@ -4,10 +4,11 @@ angular.module('modFinalizado', ['ngSanitize', 'ngRoute'])
             const API_URL='./api/';
             return {
                 //catalogos
-                //datos de operacion
                 API_GET_DOCENTE: API_URL + 'docentes/get-curp/',
+                //datos de operacion
                 API_GET_PARTICIPACION: API_URL + 'participaciones/get/',
-                
+
+                API_DOCUMENTO: API_URL + 'documentos/get/',                
                 API_FICHA_REGISTRO: './documentos/ficha-registro/get/',
             };
         })()
@@ -54,6 +55,13 @@ angular.module('modFinalizado', ['ngSanitize', 'ngRoute'])
         $scope.container={
             showLoading: true
         };    
+
+        $scope.avanceFormulario={
+            datosPersonales: true,
+            participacion: true,
+            resumen: true,
+            registrado: true
+        };
         
         //Catálogos
 
@@ -115,6 +123,7 @@ angular.module('modFinalizado', ['ngSanitize', 'ngRoute'])
             }, responseError);
         };
 
+
         // -------- operaciones con los datos operativos
 
         $scope.imprimirRegistro=function (){
@@ -150,6 +159,44 @@ angular.module('modFinalizado', ['ngSanitize', 'ngRoute'])
             }
             catch(ex){
                 console.log("Se presento un problema al generar la ficha: "+ex);
+            }
+        };
+        
+        $scope.descargaResumen=function (){
+            $scope.cargando=true;
+            
+            try{
+                var xhr=new XMLHttpRequest();
+                xhr.open("GET", API.API_DOCUMENTO+$scope.mainData.cveDocente+"?cveEntidad="+$scope.mainData.cveEntidad
+                        +"&anioParticipacion="+$scope.mainData.cveAnioAplicacion);
+                xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                xhr.responseType="json";
+                xhr.onload=function () {
+                    $scope.cargando=false;
+                    if(this.status === 200) {
+                        let doc=xhr.response.response;
+                        console.log(" encuentra Dcoumento: " + doc);                                                
+                        console.log(" nombre Dcoumento: " + doc.nombreOriginal);                                                
+                        var blob=b64toBlob(doc.contenidoBase64, "application/pdf");   
+                        console.log("tamaño: "+blob.size);    
+                        var a=document.createElement('a');
+                            a.href=URL.createObjectURL(blob);
+                            a.download=doc.nombreOriginal;
+                            a.click();
+                
+                        $scope.$apply();
+                    }
+                    else{
+                        $scope.messageAPI.showMsg(this.status, "No se logro descargar el documento");
+                    }
+                };
+                xhr.send(JSON.stringify(
+                    {
+                    })
+                );
+            }
+            catch(ex){
+                console.log("Se presento un problema al descargar el documento: "+ex);
             }
         };
     }]);

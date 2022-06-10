@@ -7,6 +7,7 @@
         <title th:text="${@environment.getProperty('app.header.title')}"></title>
         <div th:replace="fragments/header :: header-js"/>
         <div th:replace="fragments/header :: header-css"/>
+        <script type="text/javascript" th:src="@{/js/lib/angular-base64-upload.js}"></script>
         <script type="text/javascript" th:src="@{/js/lib/motorReglas.js?v=}+${@environment.getProperty('app.version')}"></script>
     </head>
     <body>

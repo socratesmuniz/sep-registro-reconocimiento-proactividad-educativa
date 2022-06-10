@@ -1,6 +1,7 @@
 package mx.gob.sep.usicamm.reconocimientoproactividad.entidades;
 
 import java.util.Date;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,6 +32,7 @@ public class ParticipacionDTO {
     private String cct;
     private String huella;
     private Date fechaRegistro;
+    private List<ArchivoDTO> archivos;
     
     public ParticipacionDTO(){
     }

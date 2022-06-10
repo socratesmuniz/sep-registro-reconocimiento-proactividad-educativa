@@ -37,7 +37,7 @@ public class RegistroParticipacionRS {
         this.service=participacionService;
         this.controlAcceso=controlAcceso;
     }
-    
+
     @LogRESTTime
     @GetMapping(value="participaciones/get/{docente}")
     public ResponseEntity<?> getParticipacion(@PathVariable Integer docente, @RequestParam(defaultValue="0") Integer cveEntidad,
@@ -62,5 +62,16 @@ public class RegistroParticipacionRS {
         else{
             return RespuestaRestParser.getDefaultInvalidTokenResponse();
         }
+    }
+
+    @LogRESTTime
+    @GetMapping(value="documentos/get/{docente}")
+    public ResponseEntity<?> getDocumento(@PathVariable Integer docente, @RequestParam(defaultValue="0") Integer cveEntidad,
+            @RequestParam(defaultValue="0") Integer anioParticipacion){
+        return RespuestaRestParser.parse(new Callable<Object>() {
+            public Object call() throws AccesoDatosExcepcion, OperacionInvalidaBdException {
+                return service.recuperaDocumento(docente, cveEntidad, anioParticipacion);
+            }
+         }, null);
     }
 }
