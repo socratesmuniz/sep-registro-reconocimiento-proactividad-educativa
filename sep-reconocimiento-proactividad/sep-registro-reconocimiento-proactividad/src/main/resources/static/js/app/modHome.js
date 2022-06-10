@@ -143,7 +143,8 @@ angular.module('homeModule', ['ngSanitize', 'ngRoute'])
             };
             
             $scope.data.errores=[];
-            validaRegla($scope, $http, responseError, $scope.mainData.cveDocente, MODULO_DATOS_PERSONALES, request, $scope.revisaErrores);
+            validaRegla($scope, $http, responseError, $scope.mainData.token, $scope.mainData.cveDocente, MODULO_DATOS_PERSONALES, 
+                    request, $scope.revisaErrores);
         };
 
 

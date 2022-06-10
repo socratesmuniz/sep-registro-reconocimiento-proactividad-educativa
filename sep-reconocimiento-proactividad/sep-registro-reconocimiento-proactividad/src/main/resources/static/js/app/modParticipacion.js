@@ -86,6 +86,7 @@ angular.module('modParticipacion', ['ngSanitize', 'ngRoute', 'naif.base64'])
         };
 
         $scope.initValues=function (){
+            $scope.mainData.token=sessionStorage.getItem('token');
             $scope.mainData.cveDocente=sessionStorage.getItem('cveDocente');
             
             $scope.getAniosAplicacion();
@@ -191,7 +192,8 @@ angular.module('modParticipacion', ['ngSanitize', 'ngRoute', 'naif.base64'])
             };
             
             $scope.data.errores=[];
-            validaRegla($scope, $http, responseError, $scope.mainData.cveDocente, MODULO_PARTICIPACION, request, $scope.continuar);
+            validaRegla($scope, $http, responseError, $scope.mainData.token, $scope.mainData.cveDocente, MODULO_PARTICIPACION, 
+                    request, $scope.continuar);
         };
 
 

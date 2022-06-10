@@ -56,7 +56,7 @@ public class RegistroParticipacionService {
                 
                 for(int i=0; datos.getArchivos()!=null && i<datos.getArchivos().size(); i++){
                     datos.getArchivos().get(i).setNombreInterno((datos.getCveEntidad()<10? "0"+datos.getCveEntidad(): datos.getCveEntidad())+"-"
-                            +datos.getCurpDocente());
+                            +datos.getCurpDocente()+"-BASICA");
                     exito=exito|this.registroParticipacionDAO.insertArchivo(datos.getCveDocente(), datos.getCveEntidad(), datos.getAnioAplicacion(),
                             datos.getArchivos().get(i));
                     

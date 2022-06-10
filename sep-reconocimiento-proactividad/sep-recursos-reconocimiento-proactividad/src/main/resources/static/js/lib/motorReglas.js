@@ -12,9 +12,10 @@ constantesMotorReglas=function(){
     };
 };
 
-validaRegla=function($scope, $http, responseError, cveDocenteLogin, cveRegla, datos, callbackPostValidacion){
+validaRegla=function($scope, $http, responseError, token, cveDocenteLogin, cveRegla, datos, callbackPostValidacion){
     if(cveRegla){
-        $http.post(constantesMotorReglas().API_MOTOR_REGLAS_VALIDACION+cveDocenteLogin+"?modulo="+cveRegla, datos).then(function(response){
+        $http.post(constantesMotorReglas().API_MOTOR_REGLAS_VALIDACION+cveDocenteLogin+"?modulo="+cveRegla, datos, 
+                {headers: {'Authorization': token}}).then(function(response){
             if(response.data.code===constantesMotorReglas().COD_OK){
                 if(response.data.response.validacion===true){
                     $scope.data.errores=[];

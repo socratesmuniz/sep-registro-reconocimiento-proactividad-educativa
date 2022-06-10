@@ -104,6 +104,7 @@ angular.module('modResumen', ['ngSanitize', 'ngRoute'])
         };
 
         $scope.initValues=function (){
+            $scope.mainData.token=sessionStorage.getItem('token');
             $scope.mainData.cveDocente=sessionStorage.getItem('cveDocente');
             $scope.mainData.curp=sessionStorage.getItem('curp');
             $scope.mainData.cveEntidad=sessionStorage.getItem('cveEntidad');
@@ -163,7 +164,8 @@ angular.module('modResumen', ['ngSanitize', 'ngRoute'])
             };
             
             $scope.data.errores=[];
-            validaRegla($scope, $http, responseError, $scope.mainData.cveDocente, MODULO_REGISTRO, request, $scope.finalizar);
+            validaRegla($scope, $http, responseError, $scope.mainData.token, $scope.mainData.cveDocente, MODULO_REGISTRO, 
+                    request, $scope.finalizar);
         };
         
         $scope.finalizar=function(){
