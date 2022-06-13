@@ -215,7 +215,7 @@ angular.module('homeModule', ['ngSanitize', 'ngRoute'])
             if($scope.data.datosParticipacion && ($scope.data.datosParticipacion.estatus==='2' || $scope.data.datosParticipacion.estatus===2)){
                 $rootScope.confirmationAlert("Ya tiene un proceso iniciado.", 
                     "Recuerde que debe concluir su proceso para obetener su comprobante. ¿Desea carga la participación existente?", function(){
-                        location.href=RUTAS.URL_RESUMEN;
+                        location.href=RUTAS.URL_PARTICIPACION;
                     },
                     function(){
                         quitTab('quit');

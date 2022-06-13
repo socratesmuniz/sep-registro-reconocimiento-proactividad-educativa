@@ -41,19 +41,33 @@ public class RegistroParticipacionService {
 
     public boolean actualizaParticipacion(ParticipacionDTO datos) throws AccesoDatosExcepcion, NegocioExcepcion, OperacionInvalidaBdException{
         boolean exito=true;
+        List<ArchivoDTO> docs;
         
         try {
-            //valida que no tenga una participacion
+            //valida si tiene una participacion
             ParticipacionDTO rTmp = this.registroParticipacionDAO.selectParticipacion(datos.getCveDocente());
-            if(rTmp!=null){
-                throw new NegocioExcepcion("El participante ya tiene una participación registrada");
-            }
-            
             datos.setHuella(this.generaHuella(datos));
-            exito=exito|this.registroParticipacionDAO.insertParticipacion(datos);
+            
+            //si no tiene agrego los datos
+            if(rTmp==null){
+                exito=exito|this.registroParticipacionDAO.insertParticipacion(datos);
+            }
+            else{
+                exito=exito|this.registroParticipacionDAO.updateParticipacion(datos);
+            }
+                        
             if(exito){
+                this.registroParticipacionDAO.deleteDetalleTrabajo(datos);
                 exito=exito|this.registroParticipacionDAO.insertDetalleTrabajo(datos);
                 
+                //elimino los documentos por si existen
+                docs=this.registroParticipacionDAO.selectDocumentos(datos.getCveDocente(), datos.getCveEntidad(), datos.getAnioAplicacion());
+                for(int i=0; docs!=null && i<docs.size(); i++){
+                    this.archivoDAO.eliminaArchivo(docs.get(i).getNombreInterno());
+                }
+                
+                //registros los documentos que envian
+                this.registroParticipacionDAO.deleteArchivos(datos.getCveDocente(), datos.getCveEntidad(), datos.getAnioAplicacion());
                 for(int i=0; datos.getArchivos()!=null && i<datos.getArchivos().size(); i++){
                     datos.getArchivos().get(i).setNombreInterno((datos.getCveEntidad()<10? "0"+datos.getCveEntidad(): datos.getCveEntidad())+"-"
                             +datos.getCurpDocente()+"-BASICA");

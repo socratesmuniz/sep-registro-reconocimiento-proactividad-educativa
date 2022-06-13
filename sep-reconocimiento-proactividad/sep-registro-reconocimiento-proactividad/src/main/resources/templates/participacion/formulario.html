@@ -29,7 +29,7 @@
                         <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Entidad federativa donde labora
                     </label>
                     <select class="form-control" id="cveEntidad" name="cveEntidad" required ng-model="data.cveEntidad"
-                            ng-change="cambiaEntidad()"
+                            ng-change="cambiaEntidad()" ng-disabled="data.datosParticipacion!=null"
                             ng-style="{'border':(participacionForm.cveEntidad.$touched && participacionForm.cveEntidad.$invalid? '2px solid red': '1px solid silver')}" >
                         <option value="">- Seleccione una opción -</option>
                         <option ng-value="item.cve" ng-repeat="item in entidades" ng-bind="item.descripcion"></option>
@@ -126,6 +126,7 @@
                         <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Año de aplicación
                     </label>
                     <select class="form-control" id="cveAnioAplicacion" name="cveAnioAplicacion" required ng-model="data.cveAnioAplicacion"
+                             ng-disabled="data.datosParticipacion!=null"
                             ng-style="{'border':(participacionForm.cveAnioAplicacion.$touched && participacionForm.cveAnioAplicacion.$invalid? '2px solid red': '1px solid silver')}" >
                         <option value="">- Seleccione una opción -</option>
                         <option ng-value="item.cve" ng-repeat="item in anios" ng-bind="item.descripcion"></option>
@@ -135,7 +136,8 @@
                     <label class="control-label" for="archivoResumen">
                         <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Práctica educativa
                     </label>
-                    <input class="form-control" type="file" ng-model="data.archivoResumen" name="archivoResumen" base-sixty-four-input required 
+                    <input class="form-control" type="file" ng-model="data.archivoResumen" name="archivoResumen" id="archivoResumen" 
+                           base-sixty-four-input required 
                            ng-style="{'border':(participacionForm.archivoResumen.$touched && participacionForm.archivoResumen.$invalid? '2px solid red': '1px solid silver')}" 
                             onload="cargaArchivoResumen" maxsize="1024" accept="application/pdf" />
                     <div style="font-size:12px;">

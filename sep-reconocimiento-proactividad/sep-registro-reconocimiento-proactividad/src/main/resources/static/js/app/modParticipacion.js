@@ -12,7 +12,9 @@ angular.module('modParticipacion', ['ngSanitize', 'ngRoute', 'naif.base64'])
                 API_SERVICIOS: API_URL + 'servicios/get',
                 API_CCT: API_URL + 'cct/get/',
                 //datos de operacion
-                API_REGISTRO: API_URL + 'participaciones/add/'
+                API_REGISTRO: API_URL + 'participaciones/add/',
+                API_GET_REGISTRO: API_URL + 'participaciones/get/',
+                API_GET_DOCUMENTOS: API_URL + 'documentos/get/'
             };
         })()
     )
@@ -180,6 +182,34 @@ angular.module('modParticipacion', ['ngSanitize', 'ngRoute', 'naif.base64'])
             }
         };
 
+        $scope.getDocumentos=function(){
+            $scope.cargando=true;
+
+            $http.get(API.API_GET_DOCUMENTOS+$scope.mainData.cveDocente+"?cveEntidad="+$scope.data.datosParticipacion.cveEntidad
+                        +"&anioParticipacion="+$scope.data.datosParticipacion.anioAplicacion).then(function(response){
+                    $scope.cargando=false;
+
+                    if (response.data.code===COD_OK){
+                        $scope.data.documentos=response.data.response;
+                        if($scope.data.documentos){
+                            $scope.data.archivoResumen={
+                                filename: $scope.data.documentos.nombreOriginal,
+                                base64: $scope.data.documentos.contenidoBase64,
+                                filetype: "application/pdf'",
+                                filesize: 10000
+                            };
+                            document.getElementById("archivoResumen").value=$scope.data.documentos.nombreOriginal;
+                        }
+                        else{
+                            $scope.data.archivoResumen=null;
+                        }
+                    }
+                    else {
+                        $scope.messageAPI.showMsg(response.data.code, response.data.msg);
+                    }
+                }, responseError);
+        };
+
             
         $scope.validaDatos=function(){
             $scope.cargando=true;
@@ -215,27 +245,31 @@ angular.module('modParticipacion', ['ngSanitize', 'ngRoute', 'naif.base64'])
         };
 
         $scope.cargaDatosExistentes=function(){
-            if(sessionStorage.getItem("cveEntidad")!==null){
-                $scope.data.cveEntidad=sessionStorage.getItem("cveEntidad");
-                $scope.getSostenimientos($scope.data.cveEntidad);
-            }
-            if(sessionStorage.getItem("cveAnioAplicacion")!==null){
-                $scope.data.cveAnioAplicacion=sessionStorage.getItem("cveAnioAplicacion");
-            }
-            if(sessionStorage.getItem("nombreTrabajo")!==null){
-                $scope.data.nombreTrabajo=sessionStorage.getItem("nombreTrabajo");
-            }
-            if(sessionStorage.getItem("cveSostenimiento")!==null){
-                $scope.data.cveSostenimiento=sessionStorage.getItem("cveSostenimiento");
-            }
-            if(sessionStorage.getItem("cveServicio")!==null){
-                $scope.data.cveServicio=sessionStorage.getItem("cveServicio")+'-'+sessionStorage.getItem("cveModalidad");
-            }
-            if(sessionStorage.getItem("cveCct")!==null){
-                $scope.data.cveCct=sessionStorage.getItem("cveCct");
-                $scope.getCct($scope.data.cveCct);
-                //$scope.participacionForm.$setDirty();
-            }
+            $scope.cargando=true;
+
+            $http.get(API.API_GET_REGISTRO+$scope.mainData.cveDocente).then(function(response){
+                    $scope.cargando=false;
+
+                    if (response.data.code===COD_OK){
+                        $scope.data.datosParticipacion=response.data.response;
+                        if($scope.data.datosParticipacion){
+//                            $scope.getDocumentos();
+                            console.log("Tiene datos existentes")
+                            
+                            $scope.data.cveEntidad=""+$scope.data.datosParticipacion.cveEntidad;
+                            $scope.getSostenimientos($scope.data.cveEntidad);
+                            $scope.data.cveAnioAplicacion=""+$scope.data.datosParticipacion.anioAplicacion;
+                            $scope.data.cveSostenimiento=""+$scope.data.datosParticipacion.cveSostenimiento;
+                            $scope.data.cveServicio=$scope.data.datosParticipacion.cveServicioEducativo+"-"+$scope.data.datosParticipacion.cveModalidad;
+                            $scope.data.cveCct=$scope.data.datosParticipacion.cveCct;
+                            $scope.getCct($scope.data.cveCct);
+                            $scope.data.nombreTrabajo=$scope.data.datosParticipacion.nombreTrabajo;
+                        }
+                    }
+                    else {
+                        $scope.messageAPI.showMsg(response.data.code, response.data.msg);
+                    }
+                }, responseError);
         };
         
         $scope.guardaDatos=function(){

@@ -41,6 +41,20 @@ public class ArchivoDAO {
         return true;
     }
     
+    public boolean eliminaArchivo(String nombre) throws IOException{
+        this.validaConformacionBase();
+        File fTmp=new File(this.rutaBase);
+        if(!fTmp.exists()){
+            throw new IOException("La ruta donde intenta eliminar '"+this.rutaBase+"' no existe");
+        }
+        
+        fTmp=new File(this.rutaBase+nombre);
+        log.debug("Intenta eliminar el archivo "+fTmp.getAbsolutePath());        
+        fTmp.delete();
+        
+        return true;
+    }
+    
     public String recuperaArchivo(String nombre) throws IOException{
         this.validaConformacionBase();
         

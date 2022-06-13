@@ -151,7 +151,7 @@ angular.module('modResumen', ['ngSanitize', 'ngRoute'])
                     }
                 }, responseError);
         };
-        
+
         $scope.getDocumentos=function(){
             $scope.cargando=true;
 
@@ -229,7 +229,7 @@ angular.module('modResumen', ['ngSanitize', 'ngRoute'])
             a.download=$scope.data.documentos.nombreOriginal;
             a.click();
 
-            $scope.$apply();
+//            $scope.$apply();
         };
 
 
