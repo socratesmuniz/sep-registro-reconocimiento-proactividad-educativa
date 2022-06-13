@@ -55,31 +55,34 @@
                 <h3 class="red salto" th:text="${@environment.getProperty('app.menu.title.participacion')}"></h3>
                 <div>
                     <strong>Entidad federativa donde labora: </strong>
-                    <span ng-bind-html="mainData.nombreEntidad"></span>
+                    <span ng-bind-html="data.datosParticipacion.entidad"></span>
                 </div>
                 <div>
                     <strong>Año de aplicación: </strong>
-                    <span ng-bind-html="mainData.cveAnioAplicacion"></span>
+                    <span ng-bind-html="data.datosParticipacion.anioAplicacion"></span>
                 </div>
                 <div>
                     <strong>Nombre del trabajo a presentar: </strong>
-                    <span ng-bind-html="mainData.nombreTrabajo"></span>
+                    <span ng-bind-html="data.datosParticipacion.nombreTrabajo"></span>
                 </div>
                 <div>
                     <strong>Archivo de resumen de la práctica educativa: </strong>
-                    <span ng-bind-html="mainData.nombreArchivo"></span>
+                    <span ng-bind-html="data.documentos.nombreOriginal"></span> &nbsp;&nbsp;
+                    <a href="#" ng-click="muestraArchivo()" ng-if="data.documentos!==null">
+                        <span class="glyphicon glyphicon-eye-open"> </span> Ver archivo
+                    </a>
                 </div>
                 <div>
                     <strong>Tipo de sostenimiento: </strong>
-                    <span ng-bind-html="mainData.nombreSostenimiento"></span>
+                    <span ng-bind-html="data.datosParticipacion.sostenimiento"></span>
                 </div>
                 <div>
                     <strong>Modalidad o servicio: </strong>
-                    <span ng-bind-html="mainData.nombreServicio"></span>
+                    <span ng-bind-html="data.datosParticipacion.servicioEducativo"></span>
                 </div>
                 <div>
                     <strong>Centro de trabajo: </strong>
-                    <span ng-bind-html="(mainData.cveCct)"></span>
+                    <span ng-bind-html="(data.datosParticipacion.cveCct+' - '+data.datosParticipacion.cct)"></span>
                 </div>
             </div>
             <hr class="row col-md-12" style="height: 5px; background-color: darkred;"/>
@@ -110,7 +113,7 @@
                 </div>
             </div>
 
-            <div class="row col-md-12">
+            <!--div class="row col-md-12">
                 <table border="0" width="100%">
                     <tr>
                         <td width="50%">
@@ -118,7 +121,7 @@
                         </td>
                     </tr>
                 </table>
-            </div>
+            </div-->
         </div>
     </body>
 </html>

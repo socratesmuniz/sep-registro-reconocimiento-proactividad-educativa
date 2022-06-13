@@ -24,6 +24,6 @@ public class PruebaFichas {
     public void generaFichaRegistro() throws Exception {
         FileOutputStream out=new FileOutputStream("ficha.pdf");
 
-        fichaRegistro.generaFicha(out, "AAAA771121MMCLNR06", 7, 2020);
+        fichaRegistro.generaFicha(out, "AAAA771121MMCLNR06");
     }
 }

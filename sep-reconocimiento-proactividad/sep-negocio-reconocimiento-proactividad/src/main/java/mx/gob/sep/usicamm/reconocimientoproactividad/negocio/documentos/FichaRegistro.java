@@ -41,7 +41,7 @@ public class FichaRegistro {
     }
     
     
-    public void generaFicha(OutputStream flujo, String curp, int cveEntidad, int anioAplicacion) throws DocumentException, BadElementException, IOException{
+    public void generaFicha(OutputStream flujo, String curp) throws DocumentException, BadElementException, IOException{
         Document document = new Document(PageSize.LETTER, 40, 40, 110, 40);
         DocenteDTO datosDocente=null;
         ParticipacionDTO datosParticipacion=null;
@@ -49,7 +49,7 @@ public class FichaRegistro {
         //recupero los datos necesarios
         try{
             datosDocente=this.docentesService.getDocente(curp);
-            datosParticipacion=this.participacionService.recuperaParticipacion(datosDocente.getCveDocente(), cveEntidad, anioAplicacion);
+            datosParticipacion=this.participacionService.recuperaParticipacion(datosDocente.getCveDocente());
         }
         catch(Exception ex){
             log.error("No se logro recuperar los datos para generar la ficha: "+ex.getMessage(), ex);
@@ -127,7 +127,7 @@ public class FichaRegistro {
         
         pTmp=new Paragraph("Estimada maestra o maestro, te solicitamos que te comuniques con tu Autoridad Educativa de la Entidad "
                 + "Federativa, con la finalidad de entregar la narrativa de tu práctica educativa, con la que participarás antes "
-                + "del 24 de junio 2022.", UtilsPDF.generaFuenteTexto());
+                + "del 24 de junio 2022.", UtilsPDF.generaFuenteNota3());
         doc.add(pTmp);
     }
 }

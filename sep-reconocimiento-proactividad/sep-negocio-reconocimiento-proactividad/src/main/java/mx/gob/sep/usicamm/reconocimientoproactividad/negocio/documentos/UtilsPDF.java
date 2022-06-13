@@ -109,6 +109,16 @@ private UtilsPDF(){
         return f;
     }
 
+    public static Font generaFuenteNota3(){
+        Font f=new Font();
+        
+        f.setColor(BaseColor.ORANGE);
+        f.setSize(11);
+        f.setStyle(Font.NORMAL);
+        
+        return f;
+    }
+
     public static Font generaFuenteNegrita(){
         Font f=generaFuenteTexto();
         

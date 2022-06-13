@@ -23,10 +23,10 @@ public class RegistroParticipacionDAO extends BaseDAO{
     }
 
     @LogExecutionTime
-    public ParticipacionDTO selectParticipacion(int docente, int entidad, int anioAplicacion){
+    public ParticipacionDTO selectParticipacion(int docente){
         return jdbcTemplate.query(SQL.SQL_SEL_REGISTRO_PARTICIPACION,
-                new Object[]{this.config.CVE_SISTEMA, this.config.CVE_NIVEL, docente, entidad, anioAplicacion},
-                new int[]{Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.INTEGER, Types.INTEGER}, 
+                new Object[]{this.config.CVE_SISTEMA, this.config.CVE_NIVEL, docente},
+                new int[]{Types.INTEGER, Types.INTEGER, Types.INTEGER}, 
                 MapperUtil::mapRowParticipacion).stream().findFirst().orElse(null);
     }
 
@@ -57,6 +57,17 @@ public class RegistroParticipacionDAO extends BaseDAO{
                 participacion.getCveDocente(),
                 participacion.getCveEntidad(),
                 participacion.getAnioAplicacion()
+                ) > 0;
+    }
+
+    @LogExecutionTime
+    public boolean updateEstatus(int estatus, int docente, int entidad, int anioParticipacion) {
+        return jdbcTemplate.update(SQL.SQL_UPD_ESTATUS_PARTICIPACION,
+                estatus,
+                config.CVE_NIVEL,
+                docente,
+                entidad,
+                anioParticipacion
                 ) > 0;
     }
 

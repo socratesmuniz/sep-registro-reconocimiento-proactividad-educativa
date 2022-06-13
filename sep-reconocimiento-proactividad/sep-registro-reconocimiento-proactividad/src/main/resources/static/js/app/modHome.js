@@ -1,6 +1,8 @@
 angular.module('homeModule', ['ngSanitize', 'ngRoute'])
     .constant('RUTAS', {
-        URL_PARTICIPACION: './participacion'
+        URL_PARTICIPACION: './participacion',
+        URL_RESUMEN: './resumen',
+        URL_CERRADO: './finalizado'
     })
     .constant('API',
         (function () {
@@ -9,19 +11,48 @@ angular.module('homeModule', ['ngSanitize', 'ngRoute'])
                 //datos de catalogos
                 API_GET_DOCENTE: API_URL + 'docentes/get-curp/',
                 //datos de operacion
+                API_GET_REGISTRO: API_URL + 'participaciones/get/'
             };
         })()
     )
     .run(function ($rootScope, $sce, $http){
         $http.defaults.headers.common.Authorization=sessionStorage.getItem('token');
+
+        //Modal de alerta
+        $rootScope.confirmationAlert=function (msg1, msg2, acceptFunction, cancelFunction) {
+            $rootScope.loading=false;
+            msg1 || (msg1="");
+            msg2 || (msg2="");
+            $rootScope.modal={
+                visible: true,
+                modalMsg1: msg1,
+                modalMsg2: $sce.trustAsHtml(msg2),
+                buttonMsgOk: 'Cargar información',
+                buttonMsgCancel: 'Cerrar la aplicación',
+                clase: "animated bounceInLeft",
+                funcionModalAceptar: acceptFunction,
+                funcionModalCancelar: cancelFunction
+            };
+        };
+
+        //metodo de default para cerrar modales
+        $rootScope.closeAnimatedModal=function () {
+            $rootScope.modal.clase="animated bounceOutRight";
+            setTimeout(function () {
+                $rootScope.modal.visible=false;
+                $rootScope.$apply();
+            }, 600);
+
+        };
     })
-    .controller('homeCtrl', ['$scope', 'RUTAS', 'API', '$http', '$window',function ($scope, RUTAS, API, $http, $window) {
+    .controller('homeCtrl', ['$rootScope', '$scope', 'RUTAS', 'API', '$http', '$window',function ($rootScope, $scope, RUTAS, API, $http, $window) {
         //constantes
         const MODULO_DATOS_PERSONALES='DP';
 
         //variables
         //datos de formulario
         $scope.data={};
+        $scope.data.datosParticipacion={};
         $scope.supportBrowser=validaBrowser();
         //datos de sesion
         $scope.mainData={};
@@ -116,7 +147,7 @@ angular.module('homeModule', ['ngSanitize', 'ngRoute'])
                         if (response.data.code===COD_OK){
                             if(response.data.response!==null){
                                 $scope.data.datosDocente=response.data.response;
-                                $scope.validaDatos();
+                                $scope.getDatosParticipacion();
                             }
                             else{
                                 $scope.messageAPI.showMsg(COD_ERROR, "No se tienen datos del participante");
@@ -129,6 +160,22 @@ angular.module('homeModule', ['ngSanitize', 'ngRoute'])
                         }
                     }, responseError);
             }
+        };
+        
+        $scope.getDatosParticipacion=function(){
+            $scope.cargando=true;
+
+            $http.get(API.API_GET_REGISTRO+$scope.mainData.cveDocente).then(function(response){
+                    $scope.cargando=false;
+
+                    if (response.data.code===COD_OK){
+                        $scope.data.datosParticipacion=response.data.response;
+                        $scope.validaDatos();
+                    }
+                    else {
+                        $scope.messageAPI.showMsg(response.data.code, response.data.msg);
+                    }
+                }, responseError);
         };
             
         $scope.validaDatos=function(){
@@ -165,6 +212,28 @@ angular.module('homeModule', ['ngSanitize', 'ngRoute'])
         };
         
         $scope.continuar=function(){
-            location.href=RUTAS.URL_PARTICIPACION;
+            if($scope.data.datosParticipacion && ($scope.data.datosParticipacion.estatus==='2' || $scope.data.datosParticipacion.estatus===2)){
+                $rootScope.confirmationAlert("Ya tiene un proceso iniciado.", 
+                    "Recuerde que debe concluir su proceso para obetener su comprobante. ¿Desea carga la participación existente?", function(){
+                        location.href=RUTAS.URL_RESUMEN;
+                    },
+                    function(){
+                        quitTab('quit');
+                    }
+                );
+            }
+            else if($scope.data.datosParticipacion && !($scope.data.datosParticipacion.estatus==='2' || $scope.data.datosParticipacion.estatus===2)){
+                $rootScope.confirmationAlert("Ya tiene un proceso finalizado.", 
+                    "¿Desea carga la participación finalizada?", function(){
+                        location.href=RUTAS.URL_CERRADO;
+                    },
+                    function(){
+                        quitTab('quit');
+                    }
+                );
+            }
+            else{
+                location.href=RUTAS.URL_PARTICIPACION;
+            }
         };
     }]);

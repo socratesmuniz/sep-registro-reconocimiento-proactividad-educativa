@@ -40,11 +40,10 @@ public class RegistroParticipacionRS {
 
     @LogRESTTime
     @GetMapping(value="participaciones/get/{docente}")
-    public ResponseEntity<?> getParticipacion(@PathVariable Integer docente, @RequestParam(defaultValue="0") Integer cveEntidad,
-            @RequestParam(defaultValue="0") Integer anioParticipacion){
+    public ResponseEntity<?> getParticipacion(@PathVariable Integer docente){
         return RespuestaRestParser.parse(new Callable<Object>() {
             public Object call() throws AccesoDatosExcepcion, OperacionInvalidaBdException {
-                return service.recuperaParticipacion(docente, cveEntidad, anioParticipacion);
+                return service.recuperaParticipacion(docente);
             }
          }, null);
     }
@@ -56,6 +55,21 @@ public class RegistroParticipacionRS {
             return RespuestaRestParser.parse(new Callable<Object>() {
                 public Object call() throws AccesoDatosExcepcion, OperacionInvalidaBdException, NegocioExcepcion {
                     return service.actualizaParticipacion(datos);
+                }
+             }, Constantes.MSG_PARTICIPACION_ADD_OK);
+        }
+        else{
+            return RespuestaRestParser.getDefaultInvalidTokenResponse();
+        }
+    }
+
+    @LogRESTTime
+    @PostMapping(value="participacion/finish/{cveDocenteLogin}")
+    public ResponseEntity<?> closeParticipacion(@RequestHeader("Authorization") String token, @PathVariable Integer cveDocenteLogin){
+        if (this.controlAcceso.validaTokenSistema(token, cveDocenteLogin)){
+            return RespuestaRestParser.parse(new Callable<Object>() {
+                public Object call() throws AccesoDatosExcepcion, OperacionInvalidaBdException, NegocioExcepcion {
+                    return service.finalizaParticipacion(cveDocenteLogin);
                 }
              }, Constantes.MSG_PARTICIPACION_UPT_OK);
         }

@@ -17,6 +17,9 @@ public enum Constantes {
 
     public final static int LOGIN_CORRECTO=1;
     public final static int LOGIN_USUARIO_NO_AUTORIZADO=5;
+
+    public final static int REGISTRADO=2;
+    public final static int CERRADO=9;
     
     public static final String NONE="NONE";
     public static final String MSG_ERROR="error";

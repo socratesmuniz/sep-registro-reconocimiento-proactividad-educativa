@@ -32,13 +32,12 @@ public class DocumentosRS {
 
     @LogRESTTime
     @PostMapping(value = "ficha-registro/get/{curp}")
-    public ResponseEntity<?> getFichaPreRegistro(@PathVariable String curp, @RequestParam(defaultValue="0") Integer entidad,
-            @RequestParam(defaultValue="0") Integer anioParticipacion){
+    public ResponseEntity<?> getFichaPreRegistro(@PathVariable String curp){
         HttpHeaders headers = new HttpHeaders();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         try {
-            this.fichaRegistro.generaFicha(baos, curp, entidad, anioParticipacion);
+            this.fichaRegistro.generaFicha(baos, curp);
             headers.add("Content-Disposition", "attachment; filename=fichaRegistro.pdf");
 
             return ResponseEntity.ok().headers(headers).body(new InputStreamResource(new ByteArrayInputStream(baos.toByteArray())));

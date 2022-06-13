@@ -10,7 +10,9 @@ angular.module('modResumen', ['ngSanitize', 'ngRoute'])
                 //catalogos
                 API_GET_DOCENTE: API_URL + 'docentes/get-curp/',
                 //datos de operacion
-                API_REGISTRO: API_URL + 'participaciones/add/'
+                API_GET_REGISTRO: API_URL + 'participaciones/get/',
+                API_SET_ESTADO: API_URL + 'participacion/finish/',
+                API_GET_DOCUMENTOS: API_URL + 'documentos/get/'
             };
         })()
     )
@@ -50,6 +52,8 @@ angular.module('modResumen', ['ngSanitize', 'ngRoute'])
         //datos de formulario
         $scope.data={};
         $scope.data.datosDocente={};
+        $scope.data.datosParticipacion={};
+        $scope.data.documentos=null;
         //datos de sesion
         $scope.mainData={};
         $scope.cargando=false;
@@ -107,21 +111,6 @@ angular.module('modResumen', ['ngSanitize', 'ngRoute'])
             $scope.mainData.token=sessionStorage.getItem('token');
             $scope.mainData.cveDocente=sessionStorage.getItem('cveDocente');
             $scope.mainData.curp=sessionStorage.getItem('curp');
-            $scope.mainData.cveEntidad=sessionStorage.getItem('cveEntidad');
-            $scope.mainData.nombreEntidad=sessionStorage.getItem('nombreEntidad');
-            $scope.mainData.cveAnioAplicacion=sessionStorage.getItem('cveAnioAplicacion');
-            $scope.mainData.nombreTrabajo=sessionStorage.getItem('nombreTrabajo');
-            $scope.mainData.cveSostenimiento=sessionStorage.getItem('cveSostenimiento');
-            $scope.mainData.nombreSostenimiento=sessionStorage.getItem('nombreSostenimiento');
-            $scope.mainData.cveServicio=sessionStorage.getItem('cveServicio');
-            $scope.mainData.cveModalidad=sessionStorage.getItem('cveModalidad');
-            $scope.mainData.nombreServicio=sessionStorage.getItem('nombreServicio');
-            $scope.mainData.cveCct=sessionStorage.getItem('cveCct');
-            $scope.mainData.nombreCct=sessionStorage.getItem('nombreCct');
-            $scope.mainData.nombreArchivo=sessionStorage.getItem('nombreArchivo');
-            $scope.mainData.contenidoArchivo=sessionStorage.getItem('contenidoArchivo');
-            console.log("Entidad: "+$scope.mainData.nombreEntidad);
-            console.log("Archivo: "+$scope.mainData.nombreArchivo+"   "+$scope.mainData.contenidoArchivo);
             
             $scope.getDatosDocente();
         };
@@ -138,13 +127,61 @@ angular.module('modResumen', ['ngSanitize', 'ngRoute'])
 
                         if (response.data.code===COD_OK){
                             $scope.data.datosDocente=response.data.response;
-                            $scope.container.showContinuar=true;
+                            $scope.getDatosParticipacion();
                         }
                         else {
                             $scope.messageAPI.showMsg(response.data.code, response.data.msg);
                         }
                     }, responseError);
             }
+        };
+        
+        $scope.getDatosParticipacion=function(){
+            $scope.cargando=true;
+
+            $http.get(API.API_GET_REGISTRO+$scope.mainData.cveDocente).then(function(response){
+                    $scope.cargando=false;
+
+                    if (response.data.code===COD_OK){
+                        $scope.data.datosParticipacion=response.data.response;
+                        $scope.getDocumentos();
+                    }
+                    else {
+                        $scope.messageAPI.showMsg(response.data.code, response.data.msg);
+                    }
+                }, responseError);
+        };
+        
+        $scope.getDocumentos=function(){
+            $scope.cargando=true;
+
+            $http.get(API.API_GET_DOCUMENTOS+$scope.mainData.cveDocente+"?cveEntidad="+$scope.data.datosParticipacion.cveEntidad
+                        +"&anioParticipacion="+$scope.data.datosParticipacion.anioAplicacion).then(function(response){
+                    $scope.cargando=false;
+
+                    if (response.data.code===COD_OK){
+                        $scope.data.documentos=response.data.response;
+                        $scope.container.showContinuar=true;
+                    }
+                    else {
+                        $scope.messageAPI.showMsg(response.data.code, response.data.msg);
+                    }
+                }, responseError);
+        };
+        
+        $scope.finalizaRegistro=function(){
+            $scope.cargando=true;
+
+            $http.post(API.API_SET_ESTADO+$scope.mainData.cveDocente).then(function(response){
+                    $scope.cargando=false;
+
+                    if (response.data.code===COD_OK){
+                        location.href=RUTAS.URL_REGISTRO;
+                    }
+                    else {
+                        $scope.messageAPI.showMsg(response.data.code, response.data.msg);
+                    }
+                }, responseError);
         };
 
 
@@ -153,14 +190,8 @@ angular.module('modResumen', ['ngSanitize', 'ngRoute'])
             let request={
                 cveDocente: $scope.mainData.cveDocente,
                 curp: $scope.mainData.curp,
-                cveEntidad: $scope.mainData.cveEntidad,
-                anioAplicacion: $scope.mainData.cveAnioAplicacion,
-                nombreTrabajo: $scope.mainData.nombreTrabajo,
-                cveSostenimiento: $scope.mainData.cveSostenimiento,
-                cveServicioEducativo: $scope.mainData.cveServicio,
-                cveModalidad: $scope.mainData.cveModalidad,
-                cveCct: $scope.mainData.cveCct,
-                nombreArchivo: $scope.mainData.nombreArchivo
+                cveEntidad: $scope.data.datosParticipacion.cveEntidad,
+                anioAplicacion: $scope.data.datosParticipacion.anioAplicacion
             };
             
             $scope.data.errores=[];
@@ -173,7 +204,7 @@ angular.module('modResumen', ['ngSanitize', 'ngRoute'])
             var accept=function () {
                 $scope.cargando=true;
                 
-                $scope.guardaDatos();
+                $scope.finalizaRegistro();
                 $rootScope.closeDisclaimerModal($rootScope.mDisclaimer);
             };
 
@@ -189,46 +220,16 @@ angular.module('modResumen', ['ngSanitize', 'ngRoute'])
                     cancel);
             
         };
+        
+        $scope.muestraArchivo=function(){
+            var blob=b64toBlob($scope.data.documentos.contenidoBase64, "application/pdf");
+            
+            var a=document.createElement('a');
+            a.href=URL.createObjectURL(blob);
+            a.download=$scope.data.documentos.nombreOriginal;
+            a.click();
 
-        $scope.guardaDatos=function(){
-            $scope.cargando=true;
-            let request={
-                cveDocente: $scope.mainData.cveDocente,
-                curpDocente: $scope.mainData.curp,
-                cveEntidad: $scope.mainData.cveEntidad,
-                anioAplicacion: $scope.mainData.cveAnioAplicacion,
-                nombreTrabajo: $scope.mainData.nombreTrabajo,
-                cveSostenimiento: $scope.mainData.cveSostenimiento,
-                cveServicioEducativo: $scope.mainData.cveServicio,
-                cveModalidad: $scope.mainData.cveModalidad,
-                cveCct: $scope.mainData.cveCct,
-                archivos: [{
-                    nombreOriginal: $scope.mainData.nombreArchivo,
-                    contenidoBase64: $scope.mainData.contenidoArchivo
-                }]
-            };
-                        
-            $http.post(API.API_REGISTRO+$scope.mainData.cveDocente, request).then(function(response){
-                $scope.cargando=false;
-                if (response.data.code === COD_OK){
-                    sessionStorage.removeItem('nombreEntidad');
-                    sessionStorage.removeItem('nombreTrabajo');
-                    sessionStorage.removeItem('cveSostenimiento');
-                    sessionStorage.removeItem('nombreSostenimiento');
-                    sessionStorage.removeItem('cveServicio');
-                    sessionStorage.removeItem('cveModalidad');
-                    sessionStorage.removeItem('nombreServicio');
-                    sessionStorage.removeItem('cveCct');
-                    sessionStorage.removeItem('nombreCct');
-                    sessionStorage.removeItem('nombreArchivo');
-                    sessionStorage.removeItem('contenidoArchivo');
-                    
-                    location.href=RUTAS.URL_REGISTRO;
-                } 
-                else {
-                    $scope.messageAPI.showMsg(response.data.code, response.data.msg);
-                }
-            }, responseError);
+            $scope.$apply();
         };
 
 

@@ -9,7 +9,7 @@ logging:
 
 app:
   header:
-    title: Registro para el Reconocimiento de práctica educativa
+    title: Registro para el reconocimiento de la práctica educativa
 
   menu:
     title:

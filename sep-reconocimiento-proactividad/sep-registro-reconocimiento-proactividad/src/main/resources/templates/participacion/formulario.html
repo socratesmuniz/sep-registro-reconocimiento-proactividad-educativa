@@ -25,7 +25,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label" for="entidad">
+                    <label class="control-label" for="cveEntidad">
                         <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Entidad federativa donde labora
                     </label>
                     <select class="form-control" id="cveEntidad" name="cveEntidad" required ng-model="data.cveEntidad"
@@ -34,45 +34,6 @@
                         <option value="">- Seleccione una opción -</option>
                         <option ng-value="item.cve" ng-repeat="item in entidades" ng-bind="item.descripcion"></option>
                     </select>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="cveAnioAplicacion">
-                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Año de aplicación
-                    </label>
-                    <select class="form-control" id="cveAnioAplicacion" name="cveAnioAplicacion" required ng-model="data.cveAnioAplicacion"
-                            ng-style="{'border':(participacionForm.cveAnioAplicacion.$touched && participacionForm.cveAnioAplicacion.$invalid? '2px solid red': '1px solid silver')}" >
-                        <option value="">- Seleccione una opción -</option>
-                        <option ng-value="item.cve" ng-repeat="item in anios" ng-bind="item.descripcion"></option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="nombreTrabajo">
-                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Nombre del trabajo a presentar
-                    </label>
-                    <textarea class="form-control" id="nombreTrabajo" name="nombreTrabajo" required ng-model="data.nombreTrabajo"
-                            ng-style="{'border':(participacionForm.nombreTrabajo.$touched && participacionForm.nombreTrabajo.$invalid? '2px solid red': '1px solid silver')}" 
-                            rows="3" maxlength="500" placeholder="Máximo 500 carácteres"></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="archivoResumen">
-                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Resumen de la práctica educativa
-                    </label>
-                    <input class="form-control" type="file" ng-model="data.archivoResumen" name="archivoResumen" base-sixty-four-input required 
-                           ng-style="{'border':(participacionForm.archivoResumen.$touched && participacionForm.archivoResumen.$invalid? '2px solid red': '1px solid silver')}" 
-                            onload="cargaArchivoResumen" maxsize="1024" accept="application/pdf" />
-                    <div style="font-size:12px;">
-                        &nbsp;<br />
-                        <ul>
-                            <li>
-                                <span style="color:darkcyan" ng-show="data.archivoResumen!==null">Tamaño detectado = {{tamanioFormateado()}} Mb </span>
-                                <span style="color:silver">Tamaño máximo = 1 Mb</span>
-                            </li>
-                            <li>
-                                <span style="color:darkcyan" ng-show="data.archivoResumen!==null">Tipo detectado = {{data.archivoResumen.filetype}} </span>
-                                <span style="color:silver">Tipo permitido = PDF</span>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="cveSostenimiento">
@@ -151,6 +112,45 @@
                     </label>
                     <br />
                     <input class="form-control" id="tipoEducativoCct" name="tipoEducativoCct" ng-model="data.cct.tipo" readonly />
+                </div>
+                <div class="row col-md-12" style="margin-top:15px;">
+                    <label class="control-label" for="nombreTrabajo">
+                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Nombre del trabajo a presentar
+                    </label>
+                    <textarea class="form-control" id="nombreTrabajo" name="nombreTrabajo" required ng-model="data.nombreTrabajo"
+                            ng-style="{'border':(participacionForm.nombreTrabajo.$touched && participacionForm.nombreTrabajo.$invalid? '2px solid red': '1px solid silver')}" 
+                            rows="3" maxlength="500" placeholder="Máximo 500 carácteres"></textarea>
+                </div>
+                <div class="row col-md-12" style="margin-top:15px;">
+                    <label class="control-label" for="cveAnioAplicacion">
+                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Año de aplicación
+                    </label>
+                    <select class="form-control" id="cveAnioAplicacion" name="cveAnioAplicacion" required ng-model="data.cveAnioAplicacion"
+                            ng-style="{'border':(participacionForm.cveAnioAplicacion.$touched && participacionForm.cveAnioAplicacion.$invalid? '2px solid red': '1px solid silver')}" >
+                        <option value="">- Seleccione una opción -</option>
+                        <option ng-value="item.cve" ng-repeat="item in anios" ng-bind="item.descripcion"></option>
+                    </select>
+                </div>
+                <div class="row col-md-12" style="margin-top:15px;">
+                    <label class="control-label" for="archivoResumen">
+                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Práctica educativa
+                    </label>
+                    <input class="form-control" type="file" ng-model="data.archivoResumen" name="archivoResumen" base-sixty-four-input required 
+                           ng-style="{'border':(participacionForm.archivoResumen.$touched && participacionForm.archivoResumen.$invalid? '2px solid red': '1px solid silver')}" 
+                            onload="cargaArchivoResumen" maxsize="1024" accept="application/pdf" />
+                    <div style="font-size:12px;">
+                        &nbsp;<br />
+                        <ul>
+                            <li>
+                                <span style="color:darkcyan" ng-show="data.archivoResumen!==null">Tamaño detectado = {{tamanioFormateado()}} Mb </span>
+                                <span style="color:silver">Tamaño máximo = 1 Mb</span>
+                            </li>
+                            <li>
+                                <span style="color:darkcyan" ng-show="data.archivoResumen!==null">Tipo detectado = {{data.archivoResumen.filetype}} </span>
+                                <span style="color:silver">Tipo permitido = PDF</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
                 <div class="row col-md-12">

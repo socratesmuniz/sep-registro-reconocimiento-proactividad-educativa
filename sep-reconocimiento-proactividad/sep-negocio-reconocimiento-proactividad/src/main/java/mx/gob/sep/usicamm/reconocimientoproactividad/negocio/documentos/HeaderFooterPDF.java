@@ -49,9 +49,9 @@ public class HeaderFooterPDF extends PdfPageEventHelper{
         catch(Exception ex){
             log.error("No se logro cargar el logo para los PDFs ("+HeaderFooterPDF.class.getResource("./logoSEP.png")+")", ex);
         }
-        ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("Proceso de reconocimiento a la Práctica Educativa", UtilsPDF.generaFuenteCabecera()), ((rect.getLeft()+rect.getRight())/2), rect.getTop()-20, 0);
-        ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("implementada durante la Contingencia Sanitaria Ocasionada", UtilsPDF.generaFuenteCabecera()), ((rect.getLeft()+rect.getRight())/2), rect.getTop()-40, 0);
-        ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("por el Virus SARS-CoV2 (COVID-19)", UtilsPDF.generaFuenteCabecera()), ((rect.getLeft()+rect.getRight())/2), rect.getTop()-60, 0);
+        ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("Proceso de reconocimiento a la práctica educativa", UtilsPDF.generaFuenteCabecera()), ((rect.getLeft()+rect.getRight())/2), rect.getTop()-20, 0);
+        ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("implementada durante la contingencia sanitaria ocasionada", UtilsPDF.generaFuenteCabecera()), ((rect.getLeft()+rect.getRight())/2), rect.getTop()-40, 0);
+        ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase("por el virus SARS-CoV2 (COVID-19)", UtilsPDF.generaFuenteCabecera()), ((rect.getLeft()+rect.getRight())/2), rect.getTop()-60, 0);
 
         //marca de agua
         try{

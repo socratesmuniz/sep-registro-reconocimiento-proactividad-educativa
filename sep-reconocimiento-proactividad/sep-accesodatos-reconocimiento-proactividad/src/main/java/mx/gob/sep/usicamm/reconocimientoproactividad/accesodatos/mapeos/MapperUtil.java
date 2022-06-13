@@ -81,6 +81,7 @@ public class MapperUtil {
         dto.setCct(resultSet.getString("cct"));
         dto.setHuella(resultSet.getString("huella"));
         dto.setFechaRegistro(resultSet.getTimestamp("fecha_registro"));
+        dto.setEstatus(resultSet.getInt("cve_cat_estatus_registro"));
                 
         return dto;
     }

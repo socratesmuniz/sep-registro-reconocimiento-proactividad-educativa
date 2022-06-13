@@ -32,6 +32,7 @@ public class ParticipacionDTO {
     private String cct;
     private String huella;
     private Date fechaRegistro;
+    private Integer estatus;
     private List<ArchivoDTO> archivos;
     
     public ParticipacionDTO(){

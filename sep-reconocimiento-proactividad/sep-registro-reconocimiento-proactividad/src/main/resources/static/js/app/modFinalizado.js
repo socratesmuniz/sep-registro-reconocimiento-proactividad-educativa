@@ -131,8 +131,7 @@ angular.module('modFinalizado', ['ngSanitize', 'ngRoute'])
             
             try{
                 var xhr=new XMLHttpRequest();
-                xhr.open("POST", API.API_FICHA_REGISTRO+$scope.mainData.curp+"?entidad="+$scope.mainData.cveEntidad
-                        +"&anioParticipacion="+$scope.mainData.cveAnioAplicacion);
+                xhr.open("POST", API.API_FICHA_REGISTRO+$scope.mainData.curp);
                 xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
                 xhr.responseType="arraybuffer";
                 xhr.onload=function () {
@@ -167,8 +166,8 @@ angular.module('modFinalizado', ['ngSanitize', 'ngRoute'])
             
             try{
                 var xhr=new XMLHttpRequest();
-                xhr.open("GET", API.API_DOCUMENTO+$scope.mainData.cveDocente+"?cveEntidad="+$scope.mainData.cveEntidad
-                        +"&anioParticipacion="+$scope.mainData.cveAnioAplicacion);
+                xhr.open("GET", API.API_DOCUMENTO+$scope.mainData.cveDocente+"?cveEntidad="+$scope.data.datosParticipacion.cveEntidad
+                        +"&anioParticipacion="+$scope.data.datosParticipacion.anioAplicacion);
                 xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
                 xhr.responseType="json";
                 xhr.onload=function () {

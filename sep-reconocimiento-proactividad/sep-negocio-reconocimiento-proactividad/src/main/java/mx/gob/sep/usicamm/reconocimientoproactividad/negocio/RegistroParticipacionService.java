@@ -44,7 +44,7 @@ public class RegistroParticipacionService {
         
         try {
             //valida que no tenga una participacion
-            ParticipacionDTO rTmp = this.registroParticipacionDAO.selectParticipacion(datos.getCveDocente(), datos.getCveEntidad(), datos.getAnioAplicacion());
+            ParticipacionDTO rTmp = this.registroParticipacionDAO.selectParticipacion(datos.getCveDocente());
             if(rTmp!=null){
                 throw new NegocioExcepcion("El participante ya tiene una participación registrada");
             }
@@ -89,12 +89,35 @@ public class RegistroParticipacionService {
         } 
     }
 
-    public ParticipacionDTO recuperaParticipacion(Integer cveDocente, Integer cveEntidad, Integer anioAplicacion) throws AccesoDatosExcepcion, OperacionInvalidaBdException{
+    public boolean finalizaParticipacion(Integer cveDocente) throws AccesoDatosExcepcion, NegocioExcepcion, OperacionInvalidaBdException{
+        try {
+            //valida que no tenga una participacion
+            ParticipacionDTO pTmp = this.registroParticipacionDAO.selectParticipacion(cveDocente);
+            if(pTmp==null){
+                throw new NegocioExcepcion("El participante no tiene una participación registrada");
+            }            
+            else if(pTmp.getEstatus()!=Constantes.REGISTRADO){
+                throw new NegocioExcepcion("La participación esta en un estado no válido");
+            }            
+            
+            return this.registroParticipacionDAO.updateEstatus(Constantes.CERRADO, cveDocente, pTmp.getCveEntidad(), pTmp.getAnioAplicacion());
+        } 
+        catch (CannotGetJdbcConnectionException e){
+            log.error(Constantes.BD_EXCEPTION_JDBC, e);
+            throw new AccesoDatosExcepcion(e);
+        } 
+        catch (BadSqlGrammarException | UncategorizedSQLException e){
+            log.error(Constantes.BD_EXCEPTION_SQL, e);
+            throw new OperacionInvalidaBdException(e);
+        }
+    }
+
+    public ParticipacionDTO recuperaParticipacion(Integer cveDocente) throws AccesoDatosExcepcion, OperacionInvalidaBdException{
         ParticipacionDTO par;
         try {
-            par=this.registroParticipacionDAO.selectParticipacion(cveDocente, cveEntidad, anioAplicacion);
+            par=this.registroParticipacionDAO.selectParticipacion(cveDocente);
             if(par!=null){
-                par.setNombreTrabajo(this.registroParticipacionDAO.selectDetalleTrabajo(cveDocente, cveEntidad, anioAplicacion));
+                par.setNombreTrabajo(this.registroParticipacionDAO.selectDetalleTrabajo(cveDocente, par.getCveEntidad(), par.getAnioAplicacion()));
             }
             
             return par;

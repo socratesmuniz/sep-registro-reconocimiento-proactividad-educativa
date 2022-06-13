@@ -10,8 +10,9 @@ angular.module('modParticipacion', ['ngSanitize', 'ngRoute', 'naif.base64'])
                 API_ENTIDADES: API_URL + 'entidades/get',
                 API_SOSTENIMIENTOS: API_URL + 'sostenimientos-entidad/get/',
                 API_SERVICIOS: API_URL + 'servicios/get',
-                API_CCT: API_URL + 'cct/get/'
+                API_CCT: API_URL + 'cct/get/',
                 //datos de operacion
+                API_REGISTRO: API_URL + 'participaciones/add/'
             };
         })()
     )
@@ -88,6 +89,7 @@ angular.module('modParticipacion', ['ngSanitize', 'ngRoute', 'naif.base64'])
         $scope.initValues=function (){
             $scope.mainData.token=sessionStorage.getItem('token');
             $scope.mainData.cveDocente=sessionStorage.getItem('cveDocente');
+            $scope.mainData.curp=sessionStorage.getItem('curp');
             
             $scope.getAniosAplicacion();
             $scope.getEntidades();
@@ -193,7 +195,7 @@ angular.module('modParticipacion', ['ngSanitize', 'ngRoute', 'naif.base64'])
             
             $scope.data.errores=[];
             validaRegla($scope, $http, responseError, $scope.mainData.token, $scope.mainData.cveDocente, MODULO_PARTICIPACION, 
-                    request, $scope.continuar);
+                    request, $scope.guardaDatos);
         };
 
 
@@ -236,22 +238,33 @@ angular.module('modParticipacion', ['ngSanitize', 'ngRoute', 'naif.base64'])
             }
         };
         
-        $scope.continuar=function(){
-            sessionStorage.setItem('cveEntidad', $scope.data.cveEntidad);
-            sessionStorage.setItem('nombreEntidad', getDescripcionElemento($scope.entidades, $scope.data.cveEntidad));
-            sessionStorage.setItem('cveAnioAplicacion', $scope.data.cveAnioAplicacion);
-            sessionStorage.setItem('nombreTrabajo', $scope.data.nombreTrabajo);
-            sessionStorage.setItem('cveSostenimiento', $scope.data.cveSostenimiento);
-            sessionStorage.setItem('nombreSostenimiento', getDescripcionElemento($scope.sostenimientos, $scope.data.cveSostenimiento));
-            sessionStorage.setItem('cveServicio', $scope.recuperaServicio());
-            sessionStorage.setItem('cveModalidad', $scope.recuperaModalidad());
-            sessionStorage.setItem('nombreServicio', getDescripcionElemento($scope.servicios, $scope.data.cveServicio));
-            sessionStorage.setItem('cveCct', $scope.data.cveCct);
-            sessionStorage.setItem('nombreCct', $scope.data.cct.nombre);
-            sessionStorage.setItem('nombreArchivo', $scope.data.archivoResumen.filename);
-            sessionStorage.setItem('contenidoArchivo', $scope.data.archivoResumen.base64);
-            
-            location.href=RUTAS.URL_RESUMEN;
+        $scope.guardaDatos=function(){
+            $scope.cargando=true;
+            let request={
+                cveDocente: $scope.mainData.cveDocente,
+                curpDocente: $scope.mainData.curp,
+                cveEntidad: $scope.data.cveEntidad,
+                anioAplicacion: $scope.data.cveAnioAplicacion,
+                nombreTrabajo: $scope.data.nombreTrabajo,
+                cveSostenimiento: $scope.data.cveSostenimiento,
+                cveServicioEducativo: $scope.recuperaServicio(),
+                cveModalidad: $scope.recuperaModalidad(),
+                cveCct: $scope.data.cveCct,
+                archivos: [{
+                    nombreOriginal: $scope.data.archivoResumen.filename,
+                    contenidoBase64: $scope.data.archivoResumen.base64
+                }]
+            };
+                        
+            $http.post(API.API_REGISTRO+$scope.mainData.cveDocente, request).then(function(response){
+                $scope.cargando=false;
+                if (response.data.code === COD_OK){                    
+                    location.href=RUTAS.URL_RESUMEN;
+                } 
+                else {
+                    $scope.messageAPI.showMsg(response.data.code, response.data.msg);
+                }
+            }, responseError);
         };
 
         $scope.recuperaServicio=function(){
@@ -273,8 +286,11 @@ angular.module('modParticipacion', ['ngSanitize', 'ngRoute', 'naif.base64'])
         };
         
         $scope.tamanioFormateado=function(){
-            let tam=$scope.data.archivoResumen.filesize/1024/1024;
-            
-            return tam.toFixed(2);
+            if($scope.data.archivoResumen){
+                let tam=$scope.data.archivoResumen.filesize/1024/1024;
+
+                return tam.toFixed(2);
+            }
+            return "";
         };
     }]);

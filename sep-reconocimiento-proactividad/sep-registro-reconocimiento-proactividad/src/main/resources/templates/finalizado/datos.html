@@ -4,10 +4,10 @@
             <div class="row col-md-12">
                 <p class="text-justify">
                     Ha finalizado el registro para el proceso de reconocimiento de práctica educativa, ciclo escolar 2022-2023. 
-                </p>.
+                </p>
                 <p class="text-justify">
                     No olvide imprimir su acuse. 
-                </p>.
+                </p>
             </div>
             
             <div class="col-sm-8 col-sm-offset-2">
@@ -44,15 +44,17 @@
             </div>
             
             <div class="row col-md-12">
+                <br />
                 <div class="text-center">
                     <button type="button" class="btn btn-primary" ng-click="imprimirRegistro()" ng-disabled="data.datosParticipacion===null">
                         <i class="glyphicon glyphicon-file"></i> Ficha de Registro
                     </button>
                     &nbsp;&nbsp;
                     <button type="button" class="btn btn-primary" ng-click="descargaResumen()" ng-disabled="data.datosParticipacion===null">
-                        <i class="glyphicon glyphicon-file"></i> Archivo de resumen
+                        <i class="glyphicon glyphicon-file"></i> Práctica educativa
                     </button>
                 </div>
+                <br />
             </div>
             
             <div class="col-sm-8 col-sm-offset-2">
@@ -61,6 +63,14 @@
                         <strong>¡Información!: </strong>
                         <div ng-bind-html="messageAPI.msg"></div>
                     </div>
+                </div>
+            </div>
+            
+            <div class="row col-md-12">
+                <div class="text-center">
+                    <a href="#" onclick="quitTab('quit')" type="button" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-remove"> </span> Cerrar
+                    </a>
                 </div>
             </div>
         </div>
