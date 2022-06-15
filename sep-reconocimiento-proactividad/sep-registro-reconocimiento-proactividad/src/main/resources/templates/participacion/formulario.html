@@ -26,7 +26,7 @@
 
                 <div class="form-group">
                     <label class="control-label" for="cveEntidad">
-                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Entidad federativa donde labora
+                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Entidad donde realizó la práctica educativa
                     </label>
                     <select class="form-control" id="cveEntidad" name="cveEntidad" required ng-model="data.cveEntidad"
                             ng-change="cambiaEntidad()" ng-disabled="data.datosParticipacion!=null"
@@ -57,7 +57,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="cveCct">
-                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Clave del centro de trabajo
+                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Clave de centro de trabajo donde se realizó la práctica educativa
                     </label>
                     <input class="form-control" id="cveCct" name="cveCct" required ng-model="data.cveCct"
                            ng-blur="cambiaCct()"

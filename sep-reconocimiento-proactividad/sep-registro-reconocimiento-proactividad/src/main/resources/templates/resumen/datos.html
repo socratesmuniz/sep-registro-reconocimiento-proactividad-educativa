@@ -54,7 +54,7 @@
             <div class="row col-md-12">
                 <h3 class="red salto" th:text="${@environment.getProperty('app.menu.title.participacion')}"></h3>
                 <div>
-                    <strong>Entidad federativa donde labora: </strong>
+                    <strong>Entidad donde realizó la práctica educativa: </strong>
                     <span ng-bind-html="data.datosParticipacion.entidad"></span>
                 </div>
                 <div>
@@ -75,13 +75,13 @@
                 <div>
                     <strong>Tipo de sostenimiento: </strong>
                     <span ng-bind-html="data.datosParticipacion.sostenimiento"></span>
-                </div>
+                </div>  
                 <div>
                     <strong>Modalidad o servicio: </strong>
                     <span ng-bind-html="data.datosParticipacion.servicioEducativo"></span>
                 </div>
                 <div>
-                    <strong>Centro de trabajo: </strong>
+                    <strong>Centro de trabajo donde se realizó la práctica educativa: </strong>
                     <span ng-bind-html="(data.datosParticipacion.cveCct+' - '+data.datosParticipacion.cct)"></span>
                 </div>
             </div>
