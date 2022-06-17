@@ -26,7 +26,7 @@ angular.module('modResumen', ['ngSanitize', 'ngRoute'])
 
             modal.visible=true;
             modal.botonOkText="Finalizar registro";
-            modal.modalMsgNote="*No olvide imprimir o guardar la contancia una vez finalizado el proceso.";
+            modal.modalMsgNote="*No olvide imprimir o guardar la constancia una vez finalizado el proceso.";
             modal.modalMsg1=msg1;
             modal.modalMsg2=$sce.trustAsHtml(msg2);
             modal.clase="animated bounceInLeft";
@@ -214,7 +214,7 @@ angular.module('modResumen', ['ngSanitize', 'ngRoute'])
 
             $scope.messageAPI.clean();
             $rootScope.disclaimerModal($rootScope.mDisclaimer,
-                    "Esta a punto de finalizar su registro.",
+                    "Está a punto de finalizar su registro.",
                     "Si está de acuerdo, escriba la palabra ACEPTO",
                     accept,
                     cancel);

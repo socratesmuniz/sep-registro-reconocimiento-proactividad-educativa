@@ -18,7 +18,7 @@
                             <h4>¡Error inesperado!</h4>
                             <strong>[<span th:text="${status}"></span>] <span th:text="${error}"></span></strong>: <i th:text="${message}"></i><br /><br />
                             Por el momento el aplicativo esta presentando un problema inesperado, favor intentarlo nuevamente más tarde. <br /><br />
-                            <a href="/venus">[Regresar a VENUS]</a> <br />
+                            <a href="${@environment.getProperty('url.app.venus')}">[Regresar a VENUS]</a> <br />
                         </div>
                     </div>
                 </div>

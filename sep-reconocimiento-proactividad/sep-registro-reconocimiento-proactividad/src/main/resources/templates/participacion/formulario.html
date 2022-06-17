@@ -134,22 +134,22 @@
                 </div>
                 <div class="row col-md-12" style="margin-top:15px;">
                     <label class="control-label" for="archivoResumen">
-                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Práctica educativa
+                        <span class="inicio_boton_cerrar_texto" style="font-weight:bold; color:red;">*</span> Narrativa de la práctica educativa
                     </label>
                     <input class="form-control" type="file" ng-model="data.archivoResumen" name="archivoResumen" id="archivoResumen" 
                            base-sixty-four-input required 
                            ng-style="{'border':(participacionForm.archivoResumen.$touched && participacionForm.archivoResumen.$invalid? '2px solid red': '1px solid silver')}" 
                             onload="cargaArchivoResumen" maxsize="1024" accept="application/pdf" />
-                    <div style="font-size:12px;">
+                    <div style="font-size:14px;">
                         &nbsp;<br />
                         <ul>
                             <li>
                                 <span style="color:darkcyan" ng-show="data.archivoResumen!==null">Tamaño detectado = {{tamanioFormateado()}} Mb </span>
-                                <span style="color:silver">Tamaño máximo = 1 Mb</span>
+                                <span style="color:green; font-weight:bold;">Tamaño máximo = 1 Mb</span>
                             </li>
                             <li>
                                 <span style="color:darkcyan" ng-show="data.archivoResumen!==null">Tipo detectado = {{data.archivoResumen.filetype}} </span>
-                                <span style="color:silver">Tipo permitido = PDF</span>
+                                <span style="color:green; font-weight:bold;">Tipo permitido = PDF</span>
                             </li>
                         </ul>
                     </div>
