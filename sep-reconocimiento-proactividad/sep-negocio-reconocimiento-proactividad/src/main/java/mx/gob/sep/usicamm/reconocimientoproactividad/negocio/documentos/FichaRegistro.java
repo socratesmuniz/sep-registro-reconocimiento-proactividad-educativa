@@ -126,8 +126,8 @@ public class FichaRegistro {
         doc.add(new Paragraph(" \n \n"));
         
         pTmp=new Paragraph("Estimada maestra o maestro, te solicitamos que te comuniques con tu Autoridad Educativa de la Entidad "
-                + "Federativa, con la finalidad de entregar la narrativa de tu práctica educativa, con la que participarás antes "
-                + "del 24 de junio 2022.", UtilsPDF.generaFuenteNota3());
+                + "Federativa, con la finalidad de entregar la narrativa y tus evidencias de tu práctica educativa, con la que "
+                + "participarás antes del 08 de julio 2022.", UtilsPDF.generaFuenteNota3());
         doc.add(pTmp);
     }
 }

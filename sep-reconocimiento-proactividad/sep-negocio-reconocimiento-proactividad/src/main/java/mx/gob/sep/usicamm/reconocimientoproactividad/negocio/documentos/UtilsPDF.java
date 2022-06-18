@@ -112,7 +112,7 @@ private UtilsPDF(){
     public static Font generaFuenteNota3(){
         Font f=new Font();
         
-        f.setColor(BaseColor.ORANGE);
+        f.setColor(BaseColor.GREEN);
         f.setSize(11);
         f.setStyle(Font.NORMAL);
         
